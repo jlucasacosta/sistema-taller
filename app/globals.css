@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Fallbacks en triplete "R G B". El layout inyecta los valores reales del theme (BULON). */
+  --primary: 12 84 96;
+  --accent: 232 87 30;
+  --bg: 243 244 242;
+  --surface: 255 255 255;
+  --fg: 16 22 26;
+  --muted: 93 107 114;
+  --border: 214 219 216;
+  --subtle: 232 235 232;
+  --success: 15 118 110;
+  --warning: 194 65 12;
+  --danger: 176 0 32;
+  --info: 71 85 105;
+  --radius: 4px;
+  --pad: 12px;
+  --badge-radius: 4px;
+  --card-border: 0 solid transparent;
+  --font-heading: system-ui, sans-serif;
+  --font-body: ui-monospace, monospace;
+
+  --shadow-sm: none;
+  --shadow-card: none;
+  --shadow-pop: none;
+}
+
+/* La scrollbar es parte del diseño, no un accidente del navegador. */
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--border)) transparent;
+  }
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--border));
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--primary) / 0.6);
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-corner { background: transparent; }
+}
+
+@layer components {
+  /* elevation: flat -> la separacion la hacen la regla de 1px y el aire. Acero, no vidrio. */
+  .surface-card {
+    background: rgb(var(--surface));
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-card);
+    border: var(--card-border);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    border-radius: var(--badge-radius);
+    padding: 0.125rem 0.5rem;
+    font-size: 0.7rem;
+    line-height: 1.1rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  /* Todo lo que es DATO va en mono tabular: patente, VIN, SKU, horas, torques. */
+  .dato {
+    font-family: var(--font-body);
+    font-variant-numeric: tabular-nums;
+  }
+  /* La patente se lee como un stencil sobre chapa. */
+  .patente {
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    font-variant-numeric: tabular-nums;
+  }
+  /* Bahia vacia: hormigon con contorno punteado. Sin chevron hazard. */
+  .bahia-libre {
+    border: 1px dashed rgb(var(--border));
+    background: rgb(var(--subtle) / 0.5);
+  }
+}
+
+/* El auto SUBE al elevador: el movimiento del taller es vertical, no horizontal. */
+@keyframes subir {
+  from { transform: translateY(28px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.subiendo { animation: subir 480ms cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* Y baja para salir de la bahia cuando se cierra QC. */
+@keyframes bajar {
+  to { transform: translateY(36px); opacity: 0; }
+}
+.bajando { animation: bajar 420ms ease-in forwards; }
+
+/* La OT excedida late. Es el frame que se graba. */
+@keyframes latir-ot {
+  0%, 100% { box-shadow: inset 3px 0 0 0 rgb(var(--danger)); }
+  50% { box-shadow: inset 6px 0 0 0 rgb(var(--danger)); }
+}
+.excedida { animation: latir-ot 1.3s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .subiendo, .bajando, .excedida { animation: none; }
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body { font-family: var(--font-body); }
+h1, h2, h3 { font-family: var(--font-heading); letter-spacing: -0.01em; }
