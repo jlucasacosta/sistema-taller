@@ -35,7 +35,7 @@ export function InventarioPage() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Kardex</h1>
+        <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Inventario</h1>
         <div className="flex flex-wrap gap-2">
           <span className="chip bg-danger/15 text-danger">{criticas.length} bajo reorden</span>
           <span className="chip bg-warning/15 text-warning">{bloqueantes.length} bloquean una OT</span>

@@ -99,7 +99,7 @@ export function TableroBahias({
   return (
     <section className="surface-card p-4">
       <header className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-heading text-sm font-bold uppercase tracking-widest">Tablero de bahias</h2>
+        <h2 className="font-heading text-sm font-bold uppercase tracking-widest">Estado de bahias</h2>
         <div className="flex gap-2">
           <span className="chip bg-subtle text-muted">
             {autos.length}/{theme.bahias} ocupadas

@@ -51,7 +51,7 @@ export function ConfigPage() {
           <Fila label="Umbral 'cerca del estimado'" value={`${Math.round(theme.labor.cerca * 100)}%`} />
           <Fila label="Umbral 'excedido'" value={`${Math.round(theme.labor.excedido * 100)}%`} />
           <p className="pt-2 text-[11px] leading-snug text-muted">
-            El Tablero de Bahias envejece con estos dos numeros. Bajá el umbral de excedido y toda la planta se pone en rojo antes.
+            El Estado de bahias envejece con estos dos numeros. Bajá el umbral de excedido y toda la planta se pone en rojo antes.
           </p>
         </Seccion>
 

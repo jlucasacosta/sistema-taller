@@ -18,7 +18,7 @@ Estás aprendiendo a crear sistemas como este con Claude Code, entrá a la comun
 ---
 
 ## Qué incluye
-- Planta: el **Tablero de Bahías** con los autos sobre los elevadores y el cronómetro de mano de obra corriendo
+- Tablero: el **Estado de Bahías** con los autos sobre los elevadores y el cronómetro de mano de obra corriendo
 - Órdenes de trabajo (kanban por estado: en cola, diagnóstico, aprobación, reparación, espera de repuesto, control de calidad, entregado)
 - Inventario: kárdex de repuestos con punto de reorden y las piezas que bloquean una OT
 - Mensajes: cada consulta atada a una patente y a una orden
@@ -66,7 +66,7 @@ Listo. Vas a ver el sistema funcionando.
 
 Todo el diseño (colores, tipografía, nombre de la marca) vive en un solo archivo: `shell/theme.ts`. Cambiás eso y muta el sistema entero.
 
-Probá algo concreto: en ese archivo, bajá `labor.excedido` de `1` a `0.7`. Toda la planta se pone en rojo antes, porque el Tablero de Bahías lee sus umbrales de ahí. Ningún componente tiene un número ni un color escrito a mano.
+Probá algo concreto: en ese archivo, bajá `labor.excedido` de `1` a `0.7`. Toda la planta se pone en rojo antes, porque el Estado de Bahías lee sus umbrales de ahí. Ningún componente tiene un número ni un color escrito a mano.
 
 ## Te trabaste
 

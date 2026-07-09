@@ -82,7 +82,7 @@ export function DashboardPage() {
 
   return (
     <div className="space-y-4">
-      <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Planta</h1>
+      <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Tablero</h1>
 
       <div className="overflow-x-auto">
         <div className="min-w-[70rem]">
@@ -114,7 +114,7 @@ export function DashboardPage() {
         </div>
 
         <div className="surface-card p-5">
-          <h2 className="mb-4 font-heading text-sm font-bold uppercase tracking-widest">Novedades</h2>
+          <h2 className="mb-4 font-heading text-sm font-bold uppercase tracking-widest">Actividad reciente</h2>
           <ul className="max-h-72 space-y-3 overflow-y-auto pr-1">
             {avisos.map((a) => (
               <li key={a.id} className="flex gap-2 border-b border-border pb-2 last:border-0">

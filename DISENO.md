@@ -10,7 +10,7 @@ El jefe de taller / recepcionista, de pie junto al mostrador, con las manos con 
 Lee sin leer: cuántos autos hay en cada estado, cuáles llevan demasiado tiempo parados (auto envejecido = plata quieta = elevación ocupada) y el punto que bloquea todo: **esperando repuesto**. El vínculo orden↔inventario es la fricción real del rubro: no se cierra una reparación sin la pieza.
 
 ## La pantalla que manda
-**ordenes** — el tablero de la OT fluyendo por sus estados (Recibido → Diagnóstico → Aprobación → Reparación → QC → Entregado), coronado por el **Tablero de Bahías**. No es un dashboard de métricas: el mecánico ejecuta órdenes, no abre reportes. El resto es soporte (conversaciones, contactos), plomería (config) o alimento de la orden (inventario con semáforo de stock).
+**ordenes** — el tablero de la OT fluyendo por sus estados (Recibido → Diagnóstico → Aprobación → Reparación → QC → Entregado), coronado por el **Estado de Bahías**. No es un dashboard de métricas: el mecánico ejecuta órdenes, no abre reportes. El resto es soporte (conversaciones, contactos), plomería (config) o alimento de la orden (inventario con semáforo de stock).
 
 ## Dirección de arte
 Estética de **manual de servicio + scanner de diagnóstico**: tinta técnica sobre papel/hormigón de taller, reglas de 1px, cero sombras. Números tabulares que se leen como odómetro. Movimiento **vertical** (los autos suben en el elevador), no horizontal.
@@ -40,8 +40,8 @@ Todo el color sale de `shell/theme.ts`. Cero hardcodeo en componentes.
 ## Módulos → arquetipo (componentes y tamaños)
 | Módulo | Arquetipo | Componentes / tamaños |
 |---|---|---|
-| **dashboard** | plano-bahías | Hospeda el **Tablero de Bahías** full-bleed arriba. Debajo, fila de 4 **stat-tiles** (autos en planta · OTs abiertas · esperando repuesto · entregas hoy), número JetBrains XXL. Panel de **bullet** (horas reales vs facturables por mecánico). Sin gráficos de torta. |
-| **ordenes** ⭐ | kanban | Pantalla que manda. Columnas por estado (Recibido→Diagnóstico→Aprobación→Reparación→QC→Entregado), tarjetas OT flat/sharp arrastrables con patente mono grande + cronómetro días-en-taller. El **Tablero de Bahías** corona la vista. Chip square de estado. Arrastrar = momento grabable. |
+| **dashboard** | plano-bahías | Hospeda el **Estado de Bahías** full-bleed arriba. Debajo, fila de 4 **stat-tiles** (autos en planta · OTs abiertas · esperando repuesto · entregas hoy), número JetBrains XXL. Panel de **bullet** (horas reales vs facturables por mecánico). Sin gráficos de torta. |
+| **ordenes** ⭐ | kanban | Pantalla que manda. Columnas por estado (Recibido→Diagnóstico→Aprobación→Reparación→QC→Entregado), tarjetas OT flat/sharp arrastrables con patente mono grande + cronómetro días-en-taller. El **Estado de Bahías** corona la vista. Chip square de estado. Arrastrar = momento grabable. |
 | **contactos** | master-detail | La unidad es el **VEHÍCULO**, no la persona. Lista de patentes (stencil mono) → ficha: historial de OTs, km, próximo service, part# usados. Sin avatares (acá manda el vehículo). |
 | **inventario** | tabla-densa | **Kárdex**: part#, descripción, ubicación, costo, stock. Cada fila trae un **gauge bullet** (stock actual vs punto de reorden con banda objetivo). Filas apretadas, mono para SKU y cantidades. |
 | **conversaciones** | lista-ticket | Hilos WhatsApp como tickets ("¿aprobás presupuesto?", "auto listo para retirar"). Bandeja densa, sin burbujas grandes. Cada ticket linkea a su patente/OT. |
@@ -53,7 +53,7 @@ Todo el color sale de `shell/theme.ts`. Cero hardcodeo en componentes.
 - **Iconos: lucide-grueso** (2.5px: llave, manómetro, aceite), tinta sobre hormigón, sin chip.
 - **Estructura de página: titulo-simple** tipo ficha de taller (Nº OT + patente stencil + estado), sin barra de métricas ornamental.
 
-## Componente estrella — Tablero de Bahías (plano-bahías)
+## Componente estrella — Estado de Bahías (plano-bahías)
 Panel **full-bleed**. N columnas = elevadores físicos (**BAHÍA 01–06** + un carril **COLA**). Grid CSS de N columnas verticales (lift-lanes).
 
 Cada bahía ocupada = tarjeta del auto "sobre el puente":
@@ -69,10 +69,10 @@ Bahía vacía = celda hormigón con contorno punteado y rótulo **"LIBRE"** (sin
 Firma que lo separa del vecino: **lift-lanes verticales + cronómetro de labor**, distinto del `plano-mesas` horizontal del restaurante y del `heatmap`/mapa de inmobiliaria. Ningún otro sistema tiene un tablero de elevadores.
 
 ## Componente eliminado
-**Buscador global del shell.** En un taller cada entidad se indexa por **PATENTE** o **Nº OT**, y ambos están surfaceados en cada tarjeta del Bay Board y del kanban: el tablero ES el índice. Fuera el buscador dominante.
+**Buscador global del shell.** En un taller cada entidad se indexa por **PATENTE** o **Nº OT**, y ambos están surfaceados en cada tarjeta del Estado de Bahías y del kanban: el tablero ES el índice. Fuera el buscador dominante.
 
 ## Frame-firma
-Autos "subiendo" en bahías/elevadores verticales bajo el Tablero de Bahías, patente mono gigante, cronómetro de labor corriendo, el borde de una tarjeta pasando de acero → naranja-señal → #B00020 mientras otra, al cerrar QC, sale de la bahía y su chip square flipea a **LISTO** teal. Todo en light petróleo+naranja, movimiento vertical, sin hazard ni ámbar.
+Autos "subiendo" en bahías/elevadores verticales bajo el Estado de Bahías, patente mono gigante, cronómetro de labor corriendo, el borde de una tarjeta pasando de acero → naranja-señal → #B00020 mientras otra, al cerrar QC, sale de la bahía y su chip square flipea a **LISTO** teal. Todo en light petróleo+naranja, movimiento vertical, sin hazard ni ámbar.
 
 ## Veredicto
 **PASA** (spec LIGHT; variante dark descartada; rojo-vencido ajustado a #B00020).
@@ -84,4 +84,4 @@ Autos "subiendo" en bahías/elevadores verticales bajo el Tablero de Bahías, pa
 - vs barberia (light/topbar/flat/soft/comfortable/square): **nav, radius, density, fuentes, color** (5) ✓
 - vs gimnasio (dark/sidebar/outlined/sharp/compact/pill): **mode, nav, elevation, badge, fuentes, color** (6) ✓
 
-**ESQUELETO:** combo **stat-tiles + bullet** único (nadie usa ninguno) · arquetipo **plano-bahías** que nadie más tiene · segundo diferencial **Kárdex con gauge bullet por fila** · estrella **Tablero de Bahías** (lift-lanes verticales + timer de labor) inexistente en el resto · eliminado real (buscador global). `ordenes=kanban` no es único (barbería lo usa en ventas) pero el peso cae en el bay-board, no en el kanban. Dos dashboards lado a lado: plano de elevadores con autos que suben, teal/naranja, light → no se confunde con ninguno.
+**ESQUELETO:** combo **stat-tiles + bullet** único (nadie usa ninguno) · arquetipo **plano-bahías** que nadie más tiene · segundo diferencial **Kárdex con gauge bullet por fila** · estrella **Estado de Bahías** (lift-lanes verticales + timer de labor) inexistente en el resto · eliminado real (buscador global). `ordenes=kanban` no es único (barbería lo usa en ventas) pero el peso cae en el estado de bahías, no en el kanban. Dos dashboards lado a lado: plano de elevadores con autos que suben, teal/naranja, light → no se confunde con ninguno.
