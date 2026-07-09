@@ -6,6 +6,9 @@ Un sistema de gestión para talleres: tablero de bahías con los autos sobre el 
 
 ---
 
+## Demo en vivo
+👉 https://sistema-taller-chi.vercel.app
+
 ## Sumate a la comunidad (gratis)
 
 Estás aprendiendo a crear sistemas como este con Claude Code, entrá a la comunidad gratuita de WhatsApp. Ahí comparto cómo se hacen desde cero.
