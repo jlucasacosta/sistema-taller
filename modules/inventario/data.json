@@ -13,7 +13,7 @@
     {
       "id": "2",
       "sku": "48068-0K040",
-      "descripcion": "Rotula suspension sup. der.",
+      "descripcion": "Rótula suspensión sup. der.",
       "ubicacion": "C-04-1",
       "costo": "$ 41.200",
       "stock": 2,
@@ -24,7 +24,7 @@
     {
       "id": "3",
       "sku": "6R1423055",
-      "descripcion": "Cremallera de direccion",
+      "descripcion": "Cremallera de dirección",
       "ubicacion": "D-02-2",
       "costo": "$ 386.000",
       "stock": 0,
@@ -46,7 +46,7 @@
     {
       "id": "5",
       "sku": "GDB1330",
-      "descripcion": "Pastillas de freno ceramicas",
+      "descripcion": "Pastillas de freno cerámicas",
       "ubicacion": "B-02-4",
       "costo": "$ 32.900",
       "stock": 5,
@@ -66,7 +66,7 @@
     {
       "id": "7",
       "sku": "CT1028WP1",
-      "descripcion": "Kit distribucion + bomba",
+      "descripcion": "Kit distribución + bomba",
       "ubicacion": "C-01-2",
       "costo": "$ 218.300",
       "stock": 3,
@@ -76,7 +76,7 @@
     {
       "id": "8",
       "sku": "OC90",
-      "descripcion": "Filtro de aceite (linea VW)",
+      "descripcion": "Filtro de aceite (línea VW)",
       "ubicacion": "A-01-4",
       "costo": "$ 9.100",
       "stock": 21,
@@ -86,7 +86,7 @@
     {
       "id": "9",
       "sku": "LS7-5W40",
-      "descripcion": "Aceite sintetico 5W40 (litro)",
+      "descripcion": "Aceite sintético 5W40 (litro)",
       "ubicacion": "A-06-1",
       "costo": "$ 12.600",
       "stock": 48,
@@ -116,7 +116,7 @@
     {
       "id": "12",
       "sku": "0281002757",
-      "descripcion": "Sensor de presion riel",
+      "descripcion": "Sensor de presión riel",
       "ubicacion": "F-03-1",
       "costo": "$ 128.900",
       "stock": 2,
@@ -126,7 +126,7 @@
     {
       "id": "13",
       "sku": "BKR6E-11",
-      "descripcion": "Bujia niquel",
+      "descripcion": "Bujía níquel",
       "ubicacion": "A-04-2",
       "costo": "$ 4.900",
       "stock": 64,
@@ -136,7 +136,7 @@
     {
       "id": "14",
       "sku": "CU2939",
-      "descripcion": "Filtro de habitaculo",
+      "descripcion": "Filtro de habitáculo",
       "ubicacion": "A-02-1",
       "costo": "$ 11.300",
       "stock": 9,
@@ -216,7 +216,7 @@
     {
       "id": "22",
       "sku": "BAT-12X75",
-      "descripcion": "Bateria 12V 75Ah",
+      "descripcion": "Batería 12V 75Ah",
       "ubicacion": "G-02-1",
       "costo": "$ 152.000",
       "stock": 5,
@@ -236,7 +236,7 @@
     {
       "id": "24",
       "sku": "LIQ-DOT4",
-      "descripcion": "Liquido de frenos DOT4 (500ml)",
+      "descripcion": "Líquido de frenos DOT4 (500ml)",
       "ubicacion": "A-07-3",
       "costo": "$ 7.200",
       "stock": 18,

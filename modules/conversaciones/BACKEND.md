@@ -1,5 +1,5 @@
 # Backend — Mensajes
-> Guia paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
+> Guía paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
 
 - Tablas: conversaciones (vehiculo_id, ot_id), mensajes.
 - Cada hilo se ata a una patente y a una OT: en el taller no hay chat suelto.

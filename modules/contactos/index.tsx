@@ -5,6 +5,13 @@ import { getVehiculos, type Vehiculo } from "./api"
 // MASTER-DETAIL indexado por PATENTE. Sin avatares: aca manda el vehiculo, no la persona.
 // Sin buscador global (componente eliminado): la lista de patentes ES el indice.
 
+// Rótulo de display: el valor interno de `estado` no se toca.
+const estadoEtiqueta: Record<Vehiculo["estado"], string> = {
+  "en taller": "en taller",
+  "al dia": "al día",
+  "service vencido": "service vencido",
+}
+
 const estadoChip: Record<Vehiculo["estado"], string> = {
   "en taller": "bg-primary/15 text-primary",
   "al dia": "bg-success/15 text-success",
@@ -27,7 +34,7 @@ export function ContactosPage() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Vehiculos</h1>
+        <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Vehículos</h1>
         <div className="flex gap-2">
           <span className="chip bg-primary/15 text-primary">{rows.length} en cartera</span>
           <span className="chip bg-danger/15 text-danger">{vencidos} service vencido</span>
@@ -53,7 +60,7 @@ export function ContactosPage() {
               </div>
               <span className={"chip shrink-0 " + estadoChip[v.estado]}>
                 <span aria-hidden="true">{v.estado === "en taller" ? "taller" : v.estado === "al dia" ? "ok" : "vencido"}</span>
-                <span className="sr-only">{v.estado}</span>
+                <span className="sr-only">{estadoEtiqueta[v.estado]}</span>
               </span>
             </button>
           ))}
@@ -67,7 +74,7 @@ export function ContactosPage() {
                 <p className="patente text-3xl leading-none">{sel.patente}</p>
                 <p className="mt-2 font-heading text-sm font-bold uppercase tracking-wide">{sel.vehiculo}</p>
               </div>
-              <span className={"chip " + estadoChip[sel.estado]}>{sel.estado}</span>
+              <span className={"chip " + estadoChip[sel.estado]}>{estadoEtiqueta[sel.estado]}</span>
             </div>
 
             <dl className="grid gap-x-6 gap-y-3 py-4 sm:grid-cols-2">
@@ -80,7 +87,7 @@ export function ContactosPage() {
                 <dd className="dato text-xs">{sel.km.toLocaleString("es-AR")} km</dd>
               </div>
               <div>
-                <dt className="text-[10px] uppercase tracking-widest text-muted">Proximo service</dt>
+                <dt className="text-[10px] uppercase tracking-widest text-muted">Próximo service</dt>
                 <dd className="dato text-xs">{sel.proximoService}</dd>
               </div>
               <div>
@@ -88,7 +95,7 @@ export function ContactosPage() {
                 <dd className="text-xs">{sel.cliente}</dd>
               </div>
               <div>
-                <dt className="text-[10px] uppercase tracking-widest text-muted">Telefono</dt>
+                <dt className="text-[10px] uppercase tracking-widest text-muted">Teléfono</dt>
                 <dd className="dato text-xs text-muted">{sel.telefono}</dd>
               </div>
               <div className="min-w-0">
@@ -102,7 +109,7 @@ export function ContactosPage() {
               <p className="dato mt-3 text-xs text-muted">sin trabajos registrados</p>
             ) : (
               <table className="mt-3 w-full text-left text-xs">
-                <caption className="sr-only">Historial de ordenes de {sel.patente}</caption>
+                <caption className="sr-only">Historial de órdenes de {sel.patente}</caption>
                 <thead>
                   <tr className="border-b border-border text-[10px] uppercase tracking-widest text-muted">
                     <th scope="col" className="py-2 font-medium">Fecha</th>

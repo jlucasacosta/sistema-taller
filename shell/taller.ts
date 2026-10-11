@@ -40,6 +40,17 @@ export const rotuloLabor: Record<NivelLabor, string> = {
 // --- Estados de la OT ---
 export type EstadoOT = "en cola" | "diagnostico" | "aprobacion" | "reparacion" | "espera repuesto" | "qc" | "entregado"
 
+// Rótulo de display: el valor interno de EstadoOT no se toca (clave de Record y de filtros).
+export const etiquetaEstado: Record<EstadoOT, string> = {
+  "en cola": "en cola",
+  diagnostico: "diagnóstico",
+  aprobacion: "aprobación",
+  reparacion: "reparación",
+  "espera repuesto": "espera repuesto",
+  qc: "qc",
+  entregado: "entregado",
+}
+
 export const chipEstado: Record<EstadoOT, string> = {
   "en cola": "bg-info/15 text-info",
   diagnostico: "bg-info/15 text-info",

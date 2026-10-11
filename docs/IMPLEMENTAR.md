@@ -1,4 +1,4 @@
-# Cómo llevar BULON a producción (guía de implementación)
+# Cómo llevar BULÓN a producción (guía de implementación)
 
 Esta guía te lleva de "clone el demo" a "mi taller usando el sistema con datos reales". Está escrita para principiantes: cada paso es copiable y dice cómo comprobar que salió bien.
 
@@ -378,7 +378,7 @@ union all
 select 'ocupacion', 'Ocupación de bahías',
        count(distinct bahia)::numeric,
        (select valor from public.ajustes where clave = 'objetivo_ocupacion_bahias'),
-       6::numeric, 'bahias'
+       6::numeric, 'bahías'
 from public.ordenes where bahia is not null
 union all
 select 'cerradas', 'OTs cerradas / semana',
@@ -475,7 +475,7 @@ function fechaHistorial(texto) {
 }
 function haceTexto(texto) {
   if (texto === "ayer") return hace(DIA)
-  const [, n, unidad] = texto.match(/hace (\d+) (min|h|dias)/)
+  const [, n, unidad] = texto.match(/hace (\d+) (min|h|días)/)
   return hace(Number(n) * (unidad === "min" ? 60_000 : unidad === "h" ? 3_600_000 : DIA))
 }
 function horaDeHoy(texto) {

@@ -81,7 +81,7 @@ Autos "subiendo" en bahías/elevadores verticales bajo el Estado de Bahías, pat
 **PIEL** vs cada sistema decidido (≥3 palancas):
 - vs inmobiliaria (light/sidebar/outlined/sharp/compact/square/Fraunces·Inter/verde+terracota): **nav, elevation, fuentes, color** (4) ✓
 - vs restaurante (dark/rail/raised/round/comfortable/pill): mode, elevation, radius, density, badge, fuentes, color ✓
-- vs barberia (light/topbar/flat/soft/comfortable/square): **nav, radius, density, fuentes, color** (5) ✓
+- vs barbería (light/topbar/flat/soft/comfortable/square): **nav, radius, density, fuentes, color** (5) ✓
 - vs gimnasio (dark/sidebar/outlined/sharp/compact/pill): **mode, nav, elevation, badge, fuentes, color** (6) ✓
 
 **ESQUELETO:** combo **stat-tiles + bullet** único (nadie usa ninguno) · arquetipo **plano-bahías** que nadie más tiene · segundo diferencial **Kárdex con gauge bullet por fila** · estrella **Estado de Bahías** (lift-lanes verticales + timer de labor) inexistente en el resto · eliminado real (buscador global). `ordenes=kanban` no es único (barbería lo usa en ventas) pero el peso cae en el estado de bahías, no en el kanban. Dos dashboards lado a lado: plano de elevadores con autos que suben, teal/naranja, light → no se confunde con ninguno.

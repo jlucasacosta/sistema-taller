@@ -5,6 +5,15 @@ import { getTickets, type Ticket } from "./api"
 // LISTA-TICKET: bandeja densa. Cada mensaje esta atado a una patente y a una OT.
 // Sin burbujas de chat: el jefe de taller escanea, no conversa.
 
+// Rótulo de display: el valor interno de `tipo` no se toca (clave de Record y de filtro).
+const tipoEtiqueta: Record<Ticket["tipo"] | "todos", string> = {
+  todos: "todos",
+  aprobacion: "aprobación",
+  consulta: "consulta",
+  aviso: "aviso",
+  reclamo: "reclamo",
+}
+
 const tipoChip: Record<Ticket["tipo"], string> = {
   aprobacion: "bg-warning/15 text-warning",
   consulta: "bg-info/15 text-info",
@@ -36,7 +45,7 @@ export function ConversacionesPage() {
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Mensajes</h1>
         <div className="flex gap-2">
-          <span className="chip bg-warning/15 text-warning">{pendientes} esperan aprobacion</span>
+          <span className="chip bg-warning/15 text-warning">{pendientes} esperan aprobación</span>
           {reclamos > 0 && <span className="chip bg-danger/15 text-danger">{reclamos} reclamo</span>}
         </div>
       </div>
@@ -49,7 +58,7 @@ export function ConversacionesPage() {
             aria-pressed={filtro === t}
             className={"chip chip-btn transition-colors " + (filtro === t ? "bg-primary text-surface" : "bg-info/15 text-info hover:bg-info/25")}
           >
-            {t}
+            {tipoEtiqueta[t]}
           </button>
         ))}
       </div>
@@ -68,7 +77,7 @@ export function ConversacionesPage() {
                 {t.cliente}: {t.ultimo}
               </p>
             </div>
-            <span className={"chip w-24 shrink-0 justify-center " + tipoChip[t.tipo]}>{t.tipo}</span>
+            <span className={"chip w-24 shrink-0 justify-center " + tipoChip[t.tipo]}>{tipoEtiqueta[t.tipo]}</span>
             <span className="dato w-14 shrink-0 text-right text-[11px] text-muted">{t.hora}</span>
             <span className="w-6 shrink-0 text-right">
               {t.sinLeer > 0 && (

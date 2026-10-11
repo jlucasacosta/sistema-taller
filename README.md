@@ -1,4 +1,4 @@
-# BULON — Sistema para talleres mecánicos
+# BULÓN — Sistema para talleres mecánicos
 
 Un sistema de gestión para talleres: tablero de bahías con los autos sobre el elevador, órdenes de trabajo que avanzan por sus estados, kárdex de repuestos y ficha por vehículo. Un sistema demo hecho con Next.js.
 

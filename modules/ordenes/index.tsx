@@ -2,7 +2,7 @@
 import { memo, useEffect, useState } from "react"
 import { getOrdenes, moverABahia, cerrarOT, type OT } from "./api"
 import { TableroBahias } from "@/shell/tablero-bahias"
-import { chipEstado, nivelDeLabor, textoLabor, hhmm, type EstadoOT } from "@/shell/taller"
+import { chipEstado, etiquetaEstado, nivelDeLabor, textoLabor, hhmm, type EstadoOT } from "@/shell/taller"
 
 // La pantalla que manda. El mecanico ejecuta ordenes, no abre reportes.
 // Arriba el Tablero de Bahias (la planta fisica). Abajo, la OT fluyendo por sus estados.
@@ -38,7 +38,7 @@ const TarjetaOT = memo(function TarjetaOT({ o, tick }: { o: OT; tick: number }) 
           </span>
         )}
       </div>
-      {o.bahia && <p className="dato mt-1 text-[10px] text-primary">bahia {String(o.bahia).padStart(2, "0")}</p>}
+      {o.bahia && <p className="dato mt-1 text-[10px] text-primary">bahía {String(o.bahia).padStart(2, "0")}</p>}
     </article>
   )
 })
@@ -87,7 +87,7 @@ export function OrdenesPage() {
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-baseline justify-between gap-3">
-        <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Ordenes de trabajo</h1>
+        <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Órdenes de trabajo</h1>
         <div className="flex gap-2">
           {excedidas > 0 && <span className="chip bg-danger/15 text-danger">{excedidas} excedidas</span>}
           {esperando > 0 && <span className="chip bg-warning/15 text-warning">{esperando} esperando repuesto</span>}
@@ -105,8 +105,8 @@ export function OrdenesPage() {
       />
 
       {/* Kanban: la OT avanza de estado. El peso visual cae en el tablero, no aca. */}
-      <h2 className="sr-only">Ordenes por estado</h2>
-      <div className="overflow-x-auto pb-2" tabIndex={0} role="region" aria-label="Ordenes por estado, desplazable horizontalmente">
+      <h2 className="sr-only">Órdenes por estado</h2>
+      <div className="overflow-x-auto pb-2" tabIndex={0} role="region" aria-label="Órdenes por estado, desplazable horizontalmente">
         <div className="flex gap-3" style={{ minWidth: "72rem" }}>
           {COLUMNAS.map((estado) => {
             const cols = rows.filter((o) => o.estado === estado)
@@ -114,9 +114,9 @@ export function OrdenesPage() {
               <section key={estado} className="w-52 shrink-0">
                 <header className="mb-2 flex items-center justify-between gap-2 px-1">
                   <h3>
-                    <span className={"chip " + chipEstado[estado]}>{estado}</span>
+                    <span className={"chip " + chipEstado[estado]}>{etiquetaEstado[estado]}</span>
                   </h3>
-                  <span className="dato text-xs text-muted" aria-label={cols.length + " ordenes"}>
+                  <span className="dato text-xs text-muted" aria-label={cols.length + " órdenes"}>
                     {cols.length}
                   </span>
                 </header>
@@ -127,7 +127,7 @@ export function OrdenesPage() {
                   {cargando && <div className="bahia-libre h-16 motion-safe:animate-pulse" aria-hidden="true" />}
                   {!cargando && cols.length === 0 && (
                     <p className="bahia-libre dato py-6 text-center text-[10px] uppercase tracking-widest text-muted">
-                      vacia
+                      vacía
                     </p>
                   )}
                 </div>

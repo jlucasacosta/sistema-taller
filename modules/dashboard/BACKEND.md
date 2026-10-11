@@ -1,7 +1,7 @@
 # Backend — Planta (dashboard)
-> Guia paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
+> Guía paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
 
-- Sin tablas propias: agrega ordenes, bahias e inventario.
-- Los bullet charts (horas reales vs objetivo) salen de una vista materializada por mecanico.
+- Sin tablas propias: agrega las tablas `ordenes`, `bahias` e inventario.
+- Los bullet charts (horas reales vs objetivo) salen de una vista materializada por mecánico.
 - Realtime: suscribir a `ordenes` para que el Tablero de Bahias se mueva solo.
 - Reemplazar: modules/dashboard/api.ts (mock -> queries agregadas). Misma firma.

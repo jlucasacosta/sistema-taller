@@ -36,7 +36,7 @@ export type Theme = {
 }
 
 export const bulon: Theme = {
-  brand: { name: "BULON" },
+  brand: { name: "BULÓN" },
   mode: "light",
   nav: "rail",
   elevation: "flat",

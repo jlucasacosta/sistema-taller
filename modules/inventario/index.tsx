@@ -44,19 +44,19 @@ export function InventarioPage() {
             aria-pressed={soloCriticas}
             className={"chip chip-btn transition-colors " + (soloCriticas ? "bg-primary text-surface" : "bg-info/15 text-info hover:bg-info/25")}
           >
-            ver solo criticas
+            ver solo críticas
           </button>
         </div>
       </div>
 
-      <div className="surface-card overflow-x-auto" tabIndex={0} role="region" aria-label="Kardex de repuestos, desplazable horizontalmente">
+      <div className="surface-card overflow-x-auto" tabIndex={0} role="region" aria-label="Kárdex de repuestos, desplazable horizontalmente">
         <table className="w-full min-w-[62rem] text-left text-sm">
-          <caption className="sr-only">Kardex de repuestos: stock actual contra punto de reorden</caption>
+          <caption className="sr-only">Kárdex de repuestos: stock actual contra punto de reorden</caption>
           <thead>
             <tr className="border-b border-border text-[10px] uppercase tracking-widest text-muted">
               <th scope="col" className="px-3 py-2 font-medium">SKU</th>
-              <th scope="col" className="px-3 py-2 font-medium">Descripcion</th>
-              <th scope="col" className="px-3 py-2 font-medium">Ubicacion</th>
+              <th scope="col" className="px-3 py-2 font-medium">Descripción</th>
+              <th scope="col" className="px-3 py-2 font-medium">Ubicación</th>
               <th scope="col" className="px-3 py-2 text-right font-medium">Costo</th>
               <th scope="col" className="px-3 py-2 text-right font-medium">Stock</th>
               <th scope="col" className="w-56 px-3 py-2 font-medium">Reorden</th>
@@ -81,7 +81,7 @@ export function InventarioPage() {
                   <td className="px-3 py-2">
                     <GaugeStock p={p} />
                     <p className="dato mt-1 text-[10px] text-muted">
-                      reorden {p.reorden} · max {p.maximo}
+                      reorden {p.reorden} · máx {p.maximo}
                     </p>
                   </td>
                   <td className="px-3 py-2">

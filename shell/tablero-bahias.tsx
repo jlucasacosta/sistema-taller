@@ -2,7 +2,7 @@
 import { useState, type CSSProperties } from "react"
 import { ArrowUpFromLine, CircleCheck } from "lucide-react"
 import { theme } from "./theme"
-import { nivelDeLabor, bordeLabor, textoLabor, rellenoLabor, rotuloLabor, chipEstado, hhmm, type EstadoOT } from "./taller"
+import { nivelDeLabor, bordeLabor, textoLabor, rellenoLabor, rotuloLabor, chipEstado, etiquetaEstado, hhmm, type EstadoOT } from "./taller"
 
 // COMPONENTE ESTRELLA · Tablero de Bahias.
 // N columnas verticales = los elevadores fisicos de la planta, mas un carril COLA.
@@ -76,7 +76,7 @@ function Tarjeta({
       </p>
 
       <div className="mt-3 flex items-center justify-between gap-2">
-        <span className={"chip " + chipEstado[o.estado]}>{o.estado}</span>
+        <span className={"chip " + chipEstado[o.estado]}>{etiquetaEstado[o.estado]}</span>
         <span className="dato text-[10px] text-muted">{o.mecanico}</span>
       </div>
 
@@ -132,7 +132,7 @@ export function TableroBahias({
     <section className="surface-card p-4" aria-labelledby="tablero-bahias-titulo" aria-busy={cargando}>
       <header className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
         <h2 id="tablero-bahias-titulo" className="font-heading text-sm font-bold uppercase tracking-widest">
-          Estado de bahias
+          Estado de bahías
         </h2>
         {!cargando && (
           <div className="flex gap-2">
@@ -154,7 +154,7 @@ export function TableroBahias({
       >
         {bahias.map((b) => {
           const auto = autos.find((a) => a.bahia === b)
-          const rotulo = `Bahia ${String(b).padStart(2, "0")}`
+          const rotulo = `Bahía ${String(b).padStart(2, "0")}`
           return (
             <div key={b} role="group" aria-label={rotulo} className="flex min-w-0 flex-col">
               <p aria-hidden="true" className="dato mb-2 text-center text-[10px] uppercase tracking-widest text-muted">
@@ -205,7 +205,7 @@ export function TableroBahias({
               </div>
             ))}
             {!cargando && cola.length === 0 && (
-              <p className="dato py-6 text-center text-[10px] uppercase tracking-widest text-muted">vacia</p>
+              <p className="dato py-6 text-center text-[10px] uppercase tracking-widest text-muted">vacía</p>
             )}
             {cargando && <div className="bahia-libre h-16 motion-safe:animate-pulse" aria-hidden="true" />}
           </div>

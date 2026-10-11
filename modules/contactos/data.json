@@ -53,7 +53,7 @@
         {
           "fecha": "ene 2026",
           "ot": "OT-4551",
-          "trabajo": "Cambio de neumaticos",
+          "trabajo": "Cambio de neumáticos",
           "costo": "$ 340.000"
         }
       ]
@@ -73,13 +73,13 @@
         {
           "fecha": "hoy",
           "ot": "OT-4818",
-          "trabajo": "Tren delantero + alineacion",
+          "trabajo": "Tren delantero + alineación",
           "costo": "$ 264.500"
         },
         {
           "fecha": "nov 2025",
           "ot": "OT-4438",
-          "trabajo": "Kit de distribucion",
+          "trabajo": "Kit de distribución",
           "costo": "$ 289.000"
         },
         {
@@ -116,7 +116,7 @@
       "vehiculo": "Renault Kangoo 2016",
       "vin": "8A1FW1BM4GL771203",
       "km": 189430,
-      "cliente": "Panaderia Suarez",
+      "cliente": "Panadería Suarez",
       "telefono": "+54 9 341 902-6614",
       "email": "panaderiasuarez@outlook.com",
       "proximoService": "vencido",
@@ -151,7 +151,7 @@
         {
           "fecha": "hoy",
           "ot": "OT-4829",
-          "trabajo": "Diagnostico luz de motor",
+          "trabajo": "Diagnóstico luz de motor",
           "costo": "$ 34.000"
         }
       ]
@@ -179,10 +179,10 @@
     {
       "id": "8",
       "patente": "AC 117 BF",
-      "vehiculo": "Citroen Berlingo 2018",
+      "vehiculo": "Citroën Berlingo 2018",
       "vin": "VF7GJKFVC8N441029",
       "km": 156980,
-      "cliente": "Ferreteria Machuca",
+      "cliente": "Ferretería Machuca",
       "telefono": "+54 9 261 801-7352",
       "email": "compras@ferreteriamachuca.com",
       "proximoService": "160.000 km",
@@ -250,7 +250,7 @@
         {
           "fecha": "hoy",
           "ot": "OT-4824",
-          "trabajo": "Caja de direccion",
+          "trabajo": "Caja de dirección",
           "costo": "$ 512.000"
         },
         {
@@ -287,7 +287,7 @@
       "vehiculo": "Chevrolet S10 2016",
       "vin": "9BG138ND0GC403811",
       "km": 245900,
-      "cliente": "Corralon Zabalza",
+      "cliente": "Corralón Zabalza",
       "telefono": "+54 9 11 8842-3057",
       "email": "corralonzabalza@gmail.com",
       "proximoService": "250.000 km",
@@ -367,7 +367,7 @@
       "vehiculo": "Peugeot Partner 2017",
       "vin": "VF37BBHY6HJ550218",
       "km": 174300,
-      "cliente": "Vidrieria Ancar",
+      "cliente": "Vidriería Ancar",
       "telefono": "+54 9 11 7446-2085",
       "email": "vidrieriaancar@hotmail.com",
       "proximoService": "180.000 km",
@@ -376,7 +376,7 @@
         {
           "fecha": "hoy",
           "ot": "OT-4825",
-          "trabajo": "Distribucion",
+          "trabajo": "Distribución",
           "costo": "$ 331.200"
         }
       ]
@@ -442,7 +442,7 @@
         {
           "fecha": "esta semana",
           "ot": "OT-4817",
-          "trabajo": "Kit de distribucion",
+          "trabajo": "Kit de distribución",
           "costo": "$ 344.000"
         }
       ]
