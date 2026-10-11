@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { getTiles, getBullets, getAvisos, type Tile, type Bullet, type Aviso } from "./api"
 import { getOrdenes, cerrarOT, type OT } from "@/modules/ordenes/api"
 import { TableroBahias } from "@/shell/tablero-bahias"
@@ -26,7 +26,7 @@ const dot: Record<Aviso["tono"], string> = {
 }
 
 // bullet chart: barra de real, marca de objetivo, banda de rango. Real vs meta, sin adornos.
-function BulletBar({ b }: { b: Bullet }) {
+const BulletBar = memo(function BulletBar({ b }: { b: Bullet }) {
   const real = Math.min(b.real / b.max, 1) * 100
   const obj = Math.min(b.objetivo / b.max, 1) * 100
   const cumple = b.real >= b.objetivo
@@ -39,20 +39,21 @@ function BulletBar({ b }: { b: Bullet }) {
           {b.real} <span className="text-muted">/ {b.objetivo} {b.unidad}</span>
         </span>
       </div>
-      <div className="relative mt-1.5 h-3 w-full bg-subtle">
+      <div className="relative mt-1.5 h-3 w-full bg-subtle" aria-hidden="true">
         <div className={"h-full " + (cumple ? "bg-success" : "bg-accent")} style={{ width: real + "%" }} />
         {/* la marca del objetivo: la regla contra la que se mide */}
         <span className="absolute top-[-2px] h-[calc(100%+4px)] w-0.5 bg-fg" style={{ left: obj + "%" }} />
       </div>
     </div>
   )
-}
+})
 
 export function DashboardPage() {
   const [tiles, setTiles] = useState<Tile[]>([])
   const [bullets, setBullets] = useState<Bullet[]>([])
   const [avisos, setAvisos] = useState<Aviso[]>([])
   const [ordenes, setOrdenes] = useState<OT[]>([])
+  const [cargando, setCargando] = useState(true)
   const [tick, setTick] = useState(0)
   const [saliendo, setSaliendo] = useState<string[]>([])
 
@@ -60,7 +61,10 @@ export function DashboardPage() {
     getTiles().then(setTiles)
     getBullets().then(setBullets)
     getAvisos().then(setAvisos)
-    getOrdenes().then(setOrdenes)
+    getOrdenes().then((o) => {
+      setOrdenes(o)
+      setCargando(false)
+    })
   }, [])
 
   useEffect(() => {
@@ -84,11 +88,7 @@ export function DashboardPage() {
     <div className="space-y-4">
       <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Tablero</h1>
 
-      <div className="overflow-x-auto">
-        <div className="min-w-[70rem]">
-          <TableroBahias autos={enBahia} cola={cola} tick={tick} saliendo={saliendo} onCerrar={entregar} />
-        </div>
-      </div>
+      <TableroBahias autos={enBahia} cola={cola} tick={tick} saliendo={saliendo} cargando={cargando} onCerrar={entregar} />
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {(tiles.length ? tiles : Array(4).fill(null)).map((t: Tile | null, i) => (
@@ -99,7 +99,7 @@ export function DashboardPage() {
                 <p className={"dato mt-1 text-5xl font-bold leading-none " + tono[t.tono]}>{t.valor}</p>
               </>
             ) : (
-              <div className="h-14 animate-pulse bg-subtle" />
+              <div className="h-14 motion-safe:animate-pulse bg-subtle" aria-hidden="true" />
             )}
           </div>
         ))}
@@ -115,10 +115,10 @@ export function DashboardPage() {
 
         <div className="surface-card p-5">
           <h2 className="mb-4 font-heading text-sm font-bold uppercase tracking-widest">Actividad reciente</h2>
-          <ul className="max-h-72 space-y-3 overflow-y-auto pr-1">
+          <ul className="max-h-72 space-y-3 overflow-y-auto pr-1" tabIndex={0} aria-label="Actividad reciente, desplazable">
             {avisos.map((a) => (
               <li key={a.id} className="flex gap-2 border-b border-border pb-2 last:border-0">
-                <span className={"mt-1.5 h-1.5 w-1.5 shrink-0 " + dot[a.tono]} />
+                <span className={"mt-1.5 h-1.5 w-1.5 shrink-0 " + dot[a.tono]} aria-hidden="true" />
                 <div className="min-w-0">
                   <p className="text-[11px] leading-snug">{a.texto}</p>
                   <p className="dato mt-0.5 text-[10px] text-muted">{a.tiempo}</p>

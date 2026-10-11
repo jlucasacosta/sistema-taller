@@ -29,7 +29,7 @@ export function ContactosPage() {
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <h1 className="font-heading text-2xl font-bold uppercase tracking-tight">Vehiculos</h1>
         <div className="flex gap-2">
-          <span className="chip bg-subtle text-muted">{rows.length} en cartera</span>
+          <span className="chip bg-primary/15 text-primary">{rows.length} en cartera</span>
           <span className="chip bg-danger/15 text-danger">{vencidos} service vencido</span>
         </div>
       </div>
@@ -41,16 +41,20 @@ export function ContactosPage() {
             <button
               key={v.id}
               onClick={() => setSel(v)}
+              aria-current={sel?.id === v.id ? "true" : undefined}
               className={
-                "flex w-full items-center justify-between gap-2 border-b border-border px-3 py-2.5 text-left transition-colors last:border-0 " +
-                (sel?.id === v.id ? "bg-subtle" : "hover:bg-subtle")
+                "flex min-h-11 w-full items-center justify-between gap-2 border-b border-border px-3 py-2.5 text-left transition-colors last:border-0 " +
+                (sel?.id === v.id ? "shadow-[inset_0_0_0_2px_rgb(var(--primary))]" : "hover:bg-bg")
               }
             >
               <div className="min-w-0">
                 <p className="patente text-sm leading-none">{v.patente}</p>
                 <p className="mt-1 truncate text-[11px] text-muted">{v.vehiculo}</p>
               </div>
-              <span className={"chip shrink-0 " + estadoChip[v.estado]}>{v.estado === "en taller" ? "taller" : v.estado === "al dia" ? "ok" : "vencido"}</span>
+              <span className={"chip shrink-0 " + estadoChip[v.estado]}>
+                <span aria-hidden="true">{v.estado === "en taller" ? "taller" : v.estado === "al dia" ? "ok" : "vencido"}</span>
+                <span className="sr-only">{v.estado}</span>
+              </span>
             </button>
           ))}
         </div>
@@ -98,12 +102,13 @@ export function ContactosPage() {
               <p className="dato mt-3 text-xs text-muted">sin trabajos registrados</p>
             ) : (
               <table className="mt-3 w-full text-left text-xs">
+                <caption className="sr-only">Historial de ordenes de {sel.patente}</caption>
                 <thead>
                   <tr className="border-b border-border text-[10px] uppercase tracking-widest text-muted">
-                    <th className="py-2 font-medium">Fecha</th>
-                    <th className="py-2 font-medium">OT</th>
-                    <th className="py-2 font-medium">Trabajo</th>
-                    <th className="py-2 text-right font-medium">Costo</th>
+                    <th scope="col" className="py-2 font-medium">Fecha</th>
+                    <th scope="col" className="py-2 font-medium">OT</th>
+                    <th scope="col" className="py-2 font-medium">Trabajo</th>
+                    <th scope="col" className="py-2 text-right font-medium">Costo</th>
                   </tr>
                 </thead>
                 <tbody>

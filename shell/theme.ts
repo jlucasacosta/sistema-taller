@@ -53,8 +53,8 @@ export const bulon: Theme = {
     muted: "#5d6b72",
     border: "#d6dbd8",
     subtle: "#e8ebe8",
-    success: "#0f766e", // teal: repuesto llego / entregado
-    warning: "#c2410c", // naranja oscuro: legible como TEXTO (el accent no llega a 4.5:1)
+    success: "#0e6d65", // teal: repuesto llego / entregado. Ajustado desde #0f766e para llegar a 4.5:1 en chips sobre bg
+    warning: "#ab390b", // naranja oscuro: legible como TEXTO (el accent no llega a 4.5:1). Ajustado desde #c2410c para 4.5:1 en chips
     danger: "#b00020", // rojo frio y oscuro: separado del naranja para no confundirlos de lejos
     info: "#475569", // acero: en cola / idle
   },

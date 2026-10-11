@@ -12,8 +12,8 @@
   --muted: 93 107 114;
   --border: 214 219 216;
   --subtle: 232 235 232;
-  --success: 15 118 110;
-  --warning: 194 65 12;
+  --success: 14 109 101;
+  --warning: 171 57 11;
   --danger: 176 0 32;
   --info: 71 85 105;
   --radius: 4px;
@@ -38,7 +38,7 @@
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb {
     background: rgb(var(--border));
-    border-radius: 9999px;
+    border-radius: var(--radius);
     border: 2px solid transparent;
     background-clip: content-box;
   }
@@ -47,6 +47,12 @@
     background-clip: content-box;
   }
   ::-webkit-scrollbar-corner { background: transparent; }
+
+  /* Foco visible: un solo anillo, con el color primario del theme. */
+  :focus-visible {
+    outline: 2px solid rgb(var(--primary));
+    outline-offset: 2px;
+  }
 }
 
 @layer components {
@@ -68,6 +74,18 @@
     letter-spacing: 0.04em;
     text-transform: uppercase;
     white-space: nowrap;
+    font-family: var(--font-body);
+  }
+  /* Chip que es un BOTON (filtros, toggles): 24px de alto en mouse, 44px en pantalla tactil. */
+  .chip-btn {
+    min-height: 1.5rem;
+    cursor: pointer;
+  }
+  @media (pointer: coarse) {
+    .chip-btn {
+      min-height: 2.75rem;
+      padding-inline: 0.75rem;
+    }
   }
   /* Todo lo que es DATO va en mono tabular: patente, VIN, SKU, horas, torques. */
   .dato {
@@ -101,15 +119,35 @@
 }
 .bajando { animation: bajar 420ms ease-in forwards; }
 
-/* La OT excedida late. Es el frame que se graba. */
-@keyframes latir-ot {
-  0%, 100% { box-shadow: inset 3px 0 0 0 rgb(var(--danger)); }
-  50% { box-shadow: inset 6px 0 0 0 rgb(var(--danger)); }
+/* La OT excedida late. Es el frame que se graba. El pulso vive en un pseudo-elemento
+   animado con transform (compositor), asi no pisa el shorthand animation de .subiendo / .bajando. */
+.excedida { position: relative; }
+.excedida::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  background: rgb(var(--danger));
+  transform-origin: left center;
+  pointer-events: none;
+  animation: latir-ot 1.3s ease-in-out infinite;
 }
-.excedida { animation: latir-ot 1.3s ease-in-out infinite; }
+@keyframes latir-ot {
+  0%, 100% { transform: scaleX(0.5); }
+  50% { transform: scaleX(1); }
+}
 
+/* Movimiento reducido: NO se apaga el cambio de estado, se cambia el recurso.
+   Entrar y salir pasan a un fundido corto sin desplazamiento, y la OT excedida
+   conserva su marca (franja fija) en lugar del pulso. */
+@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
+@keyframes desvanecer { to { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) {
-  .subiendo, .bajando, .excedida { animation: none; }
+  .subiendo { animation: aparecer 200ms ease-out; }
+  .bajando { animation: desvanecer 200ms ease-in forwards; }
+  .excedida::before { animation: none; transform: scaleX(0.75); }
 }
 
 html {

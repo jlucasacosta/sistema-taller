@@ -30,6 +30,13 @@ export const rellenoLabor: Record<NivelLabor, string> = {
   excedido: "bg-danger",
 }
 
+// El color nunca viaja solo: cada nivel tambien tiene un rotulo de texto.
+export const rotuloLabor: Record<NivelLabor, string> = {
+  dentro: "dentro del estimado",
+  cerca: "cerca del estimado",
+  excedido: "excedido",
+}
+
 // --- Estados de la OT ---
 export type EstadoOT = "en cola" | "diagnostico" | "aprobacion" | "reparacion" | "espera repuesto" | "qc" | "entregado"
 

@@ -1,5 +1,5 @@
 # Backend — Planta (dashboard)
-> Asume BACKEND_RULES.md.
+> Guia paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
 
 - Sin tablas propias: agrega ordenes, bahias e inventario.
 - Los bullet charts (horas reales vs objetivo) salen de una vista materializada por mecanico.

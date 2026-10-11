@@ -41,12 +41,13 @@ export function ConversacionesPage() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2" role="group" aria-label="Filtrar por tipo">
         {(["todos", "aprobacion", "consulta", "aviso", "reclamo"] as const).map((t) => (
           <button
             key={t}
             onClick={() => setFiltro(t)}
-            className={"chip transition-colors " + (filtro === t ? "bg-primary text-surface" : "bg-subtle text-muted hover:text-fg")}
+            aria-pressed={filtro === t}
+            className={"chip chip-btn transition-colors " + (filtro === t ? "bg-primary text-surface" : "bg-info/15 text-info hover:bg-info/25")}
           >
             {t}
           </button>
@@ -57,7 +58,7 @@ export function ConversacionesPage() {
         {visibles.map((t) => (
           <article
             key={t.id}
-            className={"flex flex-wrap items-center gap-x-4 gap-y-1 border-l-2 px-3 py-2.5 transition-colors hover:bg-subtle " + barra[t.tipo]}
+            className={"flex flex-wrap items-center gap-x-4 gap-y-1 border-l-2 px-3 py-2.5 transition-colors hover:bg-bg " + barra[t.tipo]}
           >
             <span className="patente w-28 shrink-0 text-xs">{t.patente}</span>
             <span className="dato w-20 shrink-0 text-[11px] text-muted">{t.ot}</span>
@@ -71,7 +72,10 @@ export function ConversacionesPage() {
             <span className="dato w-14 shrink-0 text-right text-[11px] text-muted">{t.hora}</span>
             <span className="w-6 shrink-0 text-right">
               {t.sinLeer > 0 && (
-                <span className="dato inline-block bg-accent px-1.5 text-[10px] font-bold text-surface">{t.sinLeer}</span>
+                <span className="dato inline-block bg-accent px-1.5 text-[10px] font-bold text-fg">
+                  <span aria-hidden="true">{t.sinLeer}</span>
+                  <span className="sr-only">{t.sinLeer} sin leer</span>
+                </span>
               )}
             </span>
           </article>

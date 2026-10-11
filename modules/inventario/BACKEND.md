@@ -1,5 +1,5 @@
 # Backend — Inventario (kardex)
-> Asume BACKEND_RULES.md.
+> Guia paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
 
 - Tablas: piezas (sku, descripcion, ubicacion, costo, stock, punto_reorden, maximo),
   movimientos (pieza_id, ot_id, cantidad, tipo).

@@ -49,7 +49,10 @@ function rgb(hex: string) {
   return `${(n >> 16) & 255} ${(n >> 8) & 255} ${n & 255}`
 }
 
-export const metadata = { title: "Sistema", description: "Demo" }
+export const metadata = {
+  title: { default: `${theme.brand.name} · Sistema para talleres mecánicos`, template: `%s · ${theme.brand.name}` },
+  description: "Demo frontend con datos de ejemplo: tablero de bahías, órdenes de trabajo, inventario y vehículos de un taller mecánico.",
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const c = theme.colors
@@ -80,9 +83,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="es">
       <body className={fontClass} style={vars}>
-        <div className={"min-h-screen bg-bg text-fg " + (stacked ? "flex flex-col" : "flex")}>
+        <a
+          href="#contenido"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-50 focus:bg-primary focus:px-3 focus:py-2 focus:text-sm focus:text-surface"
+        >
+          Saltar al contenido
+        </a>
+        <div className={"min-h-dvh bg-bg text-fg " + (stacked ? "flex flex-col" : "flex")}>
           <Nav />
-          <main className="flex-1 overflow-x-hidden p-[var(--pad)]">{children}</main>
+          <main id="contenido" tabIndex={-1} className="min-w-0 flex-1 overflow-x-hidden p-[var(--pad)] focus:outline-none">
+            {children}
+          </main>
         </div>
       </body>
     </html>

@@ -15,7 +15,7 @@ function Marca({ compact = false }: { compact?: boolean }) {
     .join("")
   if (compact) {
     return (
-      <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-bg">
+      <span className="flex h-9 w-9 items-center justify-center rounded bg-primary text-sm font-bold text-bg">
         {iniciales}
       </span>
     )
@@ -26,23 +26,24 @@ function Marca({ compact = false }: { compact?: boolean }) {
 // --- sidebar: herramienta de escritorio. Etiquetas siempre visibles. ---
 function Sidebar({ path }: { path: string }) {
   return (
-    <aside className="flex w-56 shrink-0 flex-col border-r border-border bg-surface p-[var(--pad)]">
+    <aside className="sticky top-0 flex h-dvh w-56 shrink-0 flex-col overflow-y-auto border-r border-border bg-surface p-[var(--pad)]">
       <div className="mb-8 px-3 pt-2">
         <Marca />
       </div>
-      <nav className="space-y-1">
+      <nav aria-label="Principal" className="space-y-1">
         {nav.map(({ label, href, icon: Icon }) => {
           const active = path === href
           return (
             <Link
               key={href}
               href={href}
+              aria-current={active ? "page" : undefined}
               className={
-                "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors " +
+                "flex min-h-11 items-center gap-3 rounded px-3 py-2 text-sm transition-colors " +
                 (active ? "bg-subtle font-medium text-primary" : "text-muted hover:bg-subtle hover:text-fg")
               }
             >
-              <Icon size={18} />
+              <Icon size={18} aria-hidden="true" />
               {label}
             </Link>
           )
@@ -58,21 +59,22 @@ function Topbar({ path }: { path: string }) {
     <header className="sticky top-0 z-10 border-b border-border bg-surface">
       <div className="flex items-center gap-8 px-[var(--pad)] py-3">
         <Marca />
-        <nav className="flex flex-1 items-center gap-1 overflow-x-auto">
+        <nav aria-label="Principal" className="flex flex-1 items-center gap-1 overflow-x-auto">
           {nav.map(({ label, href, icon: Icon }) => {
             const active = path === href
             return (
               <Link
                 key={href}
                 href={href}
+                aria-current={active ? "page" : undefined}
                 className={
-                  "flex shrink-0 items-center gap-2 border-b-2 px-3 py-2 text-sm transition-colors " +
+                  "flex min-h-11 shrink-0 items-center gap-2 border-b-2 px-3 py-2 text-sm transition-colors " +
                   (active
                     ? "border-primary font-medium text-fg"
                     : "border-transparent text-muted hover:border-border hover:text-fg")
                 }
               >
-                <Icon size={16} />
+                <Icon size={16} aria-hidden="true" />
                 {label}
               </Link>
             )
@@ -86,30 +88,36 @@ function Topbar({ path }: { path: string }) {
 // --- rail: solo iconos. Maxima superficie para el contenido. ---
 function Rail({ path }: { path: string }) {
   return (
-    <aside className="flex w-16 shrink-0 flex-col items-center gap-2 border-r border-border bg-surface py-4">
+    <aside className="sticky top-0 flex h-dvh w-16 shrink-0 flex-col items-center gap-2 border-r border-border bg-surface py-4">
       <div className="mb-6">
         <Marca compact />
       </div>
-      {nav.map(({ label, href, icon: Icon }) => {
-        const active = path === href
-        return (
-          <Link
-            key={href}
-            href={href}
-            title={label}
-            aria-label={label}
-            className={
-              "group relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors " +
-              (active ? "bg-primary text-bg" : "text-muted hover:bg-subtle hover:text-fg")
-            }
-          >
-            <Icon size={20} strokeWidth={2.5} />
-            <span className="pointer-events-none absolute left-12 z-20 hidden whitespace-nowrap rounded-md bg-fg px-2 py-1 text-xs text-bg group-hover:block">
-              {label}
-            </span>
-          </Link>
-        )
-      })}
+      <nav aria-label="Principal" className="flex flex-col items-center gap-2">
+        {nav.map(({ label, href, icon: Icon }) => {
+          const active = path === href
+          return (
+            <Link
+              key={href}
+              href={href}
+              title={label}
+              aria-label={label}
+              aria-current={active ? "page" : undefined}
+              className={
+                "group relative flex h-11 w-11 items-center justify-center rounded transition-colors " +
+                (active ? "bg-primary text-bg" : "text-muted hover:bg-subtle hover:text-fg")
+              }
+            >
+              <Icon size={20} strokeWidth={2.5} aria-hidden="true" />
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute left-12 z-20 hidden whitespace-nowrap rounded bg-fg px-2 py-1 text-xs text-bg group-hover:block group-focus-visible:block"
+              >
+                {label}
+              </span>
+            </Link>
+          )
+        })}
+      </nav>
     </aside>
   )
 }

@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { getOrdenes, moverABahia, cerrarOT, type OT } from "./api"
 import { TableroBahias } from "@/shell/tablero-bahias"
 import { chipEstado, nivelDeLabor, textoLabor, hhmm, type EstadoOT } from "@/shell/taller"
@@ -9,7 +9,8 @@ import { chipEstado, nivelDeLabor, textoLabor, hhmm, type EstadoOT } from "@/she
 
 const COLUMNAS: EstadoOT[] = ["en cola", "diagnostico", "aprobacion", "reparacion", "espera repuesto", "qc", "entregado"]
 
-function TarjetaOT({ o, tick }: { o: OT; tick: number }) {
+// memo: el tick del segundo solo le llega a las OT que estan en una bahia (el resto no re-renderiza).
+const TarjetaOT = memo(function TarjetaOT({ o, tick }: { o: OT; tick: number }) {
   const hecha = o.laborHecha + (o.bahia ? tick / 60 : 0)
   const nivel = nivelDeLabor(hecha || 1, o.laborEstimada)
   const excedida = o.laborHecha > 0 && nivel === "excedido"
@@ -40,15 +41,19 @@ function TarjetaOT({ o, tick }: { o: OT; tick: number }) {
       {o.bahia && <p className="dato mt-1 text-[10px] text-primary">bahia {String(o.bahia).padStart(2, "0")}</p>}
     </article>
   )
-}
+})
 
 export function OrdenesPage() {
   const [rows, setRows] = useState<OT[]>([])
+  const [cargando, setCargando] = useState(true)
   const [tick, setTick] = useState(0)
   const [saliendo, setSaliendo] = useState<string[]>([])
 
   useEffect(() => {
-    getOrdenes().then(setRows)
+    getOrdenes().then((r) => {
+      setRows(r)
+      setCargando(false)
+    })
   }, [])
 
   // El cronometro de mano de obra corre en vivo.
@@ -89,28 +94,38 @@ export function OrdenesPage() {
         </div>
       </div>
 
-      <div className="overflow-x-auto">
-        <div className="min-w-[70rem]">
-          <TableroBahias autos={enBahia} cola={cola} tick={tick} saliendo={saliendo} onSubir={subir} onCerrar={entregar} />
-        </div>
-      </div>
+      <TableroBahias
+        autos={enBahia}
+        cola={cola}
+        tick={tick}
+        saliendo={saliendo}
+        cargando={cargando}
+        onSubir={subir}
+        onCerrar={entregar}
+      />
 
       {/* Kanban: la OT avanza de estado. El peso visual cae en el tablero, no aca. */}
-      <div className="overflow-x-auto pb-2">
+      <h2 className="sr-only">Ordenes por estado</h2>
+      <div className="overflow-x-auto pb-2" tabIndex={0} role="region" aria-label="Ordenes por estado, desplazable horizontalmente">
         <div className="flex gap-3" style={{ minWidth: "72rem" }}>
           {COLUMNAS.map((estado) => {
             const cols = rows.filter((o) => o.estado === estado)
             return (
               <section key={estado} className="w-52 shrink-0">
                 <header className="mb-2 flex items-center justify-between gap-2 px-1">
-                  <span className={"chip " + chipEstado[estado]}>{estado}</span>
-                  <span className="dato text-xs text-muted">{cols.length}</span>
+                  <h3>
+                    <span className={"chip " + chipEstado[estado]}>{estado}</span>
+                  </h3>
+                  <span className="dato text-xs text-muted" aria-label={cols.length + " ordenes"}>
+                    {cols.length}
+                  </span>
                 </header>
                 <div className="space-y-2">
                   {cols.map((o) => (
-                    <TarjetaOT key={o.id} o={o} tick={tick} />
+                    <TarjetaOT key={o.id} o={o} tick={o.bahia ? tick : 0} />
                   ))}
-                  {cols.length === 0 && (
+                  {cargando && <div className="bahia-libre h-16 motion-safe:animate-pulse" aria-hidden="true" />}
+                  {!cargando && cols.length === 0 && (
                     <p className="bahia-libre dato py-6 text-center text-[10px] uppercase tracking-widest text-muted">
                       vacia
                     </p>

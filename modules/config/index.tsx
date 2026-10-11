@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useId, useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { theme } from "@/shell/theme"
 
@@ -10,7 +10,7 @@ function Fila({ label, value, swatch }: { label: string; value: string; swatch?:
     <div className="flex items-center justify-between py-1.5">
       <span className="text-xs text-muted">{label}</span>
       <span className="dato flex items-center gap-2 text-xs font-medium">
-        {swatch && <span className="h-4 w-4 border border-border" style={{ background: value }} />}
+        {swatch && <span className="h-4 w-4 border border-border" style={{ background: value }} aria-hidden="true" />}
         {value}
       </span>
     </div>
@@ -19,16 +19,28 @@ function Fila({ label, value, swatch }: { label: string; value: string; swatch?:
 
 function Seccion({ titulo, children, abierta }: { titulo: string; children: React.ReactNode; abierta?: boolean }) {
   const [open, setOpen] = useState(!!abierta)
+  const panelId = useId()
   return (
     <section className="surface-card overflow-hidden">
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex w-full items-center justify-between px-4 py-3 text-left transition-colors hover:bg-subtle"
-      >
-        <h2 className="font-heading text-xs font-bold uppercase tracking-widest">{titulo}</h2>
-        <ChevronDown size={16} strokeWidth={2.5} className={"text-muted transition-transform " + (open ? "rotate-180" : "")} />
-      </button>
-      {open && <div className="border-t border-border px-4 py-3">{children}</div>}
+      <h2 className="font-heading text-xs font-bold uppercase tracking-widest">
+        <button
+          onClick={() => setOpen((o) => !o)}
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="flex min-h-11 w-full items-center justify-between px-4 py-3 text-left uppercase tracking-widest transition-colors hover:bg-subtle"
+        >
+          {titulo}
+          <ChevronDown
+            size={16}
+            strokeWidth={2.5}
+            aria-hidden="true"
+            className={"text-muted transition-transform motion-reduce:transition-none " + (open ? "rotate-180" : "")}
+          />
+        </button>
+      </h2>
+      <div id={panelId} hidden={!open} className="border-t border-border px-4 py-3">
+        {children}
+      </div>
     </section>
   )
 }

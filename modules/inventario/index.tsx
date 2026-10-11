@@ -13,7 +13,7 @@ function GaugeStock({ p }: { p: Pieza }) {
   const marca = Math.min(p.reorden / p.maximo, 1) * 100
 
   return (
-    <div className="relative h-2.5 w-full bg-subtle">
+    <div className="relative h-2.5 w-full bg-subtle" aria-hidden="true">
       <div className={"h-full " + rellenoStock[nivel]} style={{ width: ancho + "%" }} />
       <span className="absolute top-[-2px] h-[calc(100%+4px)] w-0.5 bg-fg" style={{ left: marca + "%" }} />
     </div>
@@ -41,31 +41,33 @@ export function InventarioPage() {
           <span className="chip bg-warning/15 text-warning">{bloqueantes.length} bloquean una OT</span>
           <button
             onClick={() => setSoloCriticas((s) => !s)}
-            className={"chip transition-colors " + (soloCriticas ? "bg-primary text-surface" : "bg-subtle text-muted hover:text-fg")}
+            aria-pressed={soloCriticas}
+            className={"chip chip-btn transition-colors " + (soloCriticas ? "bg-primary text-surface" : "bg-info/15 text-info hover:bg-info/25")}
           >
-            {soloCriticas ? "viendo criticas" : "ver solo criticas"}
+            ver solo criticas
           </button>
         </div>
       </div>
 
-      <div className="surface-card overflow-x-auto">
+      <div className="surface-card overflow-x-auto" tabIndex={0} role="region" aria-label="Kardex de repuestos, desplazable horizontalmente">
         <table className="w-full min-w-[62rem] text-left text-sm">
+          <caption className="sr-only">Kardex de repuestos: stock actual contra punto de reorden</caption>
           <thead>
             <tr className="border-b border-border text-[10px] uppercase tracking-widest text-muted">
-              <th className="px-3 py-2 font-medium">SKU</th>
-              <th className="px-3 py-2 font-medium">Descripcion</th>
-              <th className="px-3 py-2 font-medium">Ubicacion</th>
-              <th className="px-3 py-2 text-right font-medium">Costo</th>
-              <th className="px-3 py-2 text-right font-medium">Stock</th>
-              <th className="w-56 px-3 py-2 font-medium">Reorden</th>
-              <th className="px-3 py-2 font-medium">Estado</th>
+              <th scope="col" className="px-3 py-2 font-medium">SKU</th>
+              <th scope="col" className="px-3 py-2 font-medium">Descripcion</th>
+              <th scope="col" className="px-3 py-2 font-medium">Ubicacion</th>
+              <th scope="col" className="px-3 py-2 text-right font-medium">Costo</th>
+              <th scope="col" className="px-3 py-2 text-right font-medium">Stock</th>
+              <th scope="col" className="w-56 px-3 py-2 font-medium">Reorden</th>
+              <th scope="col" className="px-3 py-2 font-medium">Estado</th>
             </tr>
           </thead>
           <tbody>
             {visibles.map((p) => {
               const nivel = nivelDeStock(p.stock, p.reorden)
               return (
-                <tr key={p.id} className="border-b border-border transition-colors last:border-0 hover:bg-subtle">
+                <tr key={p.id} className="border-b border-border transition-colors last:border-0 hover:bg-bg">
                   <td className="dato px-3 py-2 text-xs font-bold">{p.sku}</td>
                   <td className="px-3 py-2 text-xs">
                     {p.descripcion}

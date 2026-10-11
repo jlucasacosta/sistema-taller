@@ -1,5 +1,5 @@
 # Backend — Vehiculos
-> Asume BACKEND_RULES.md.
+> Guia paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
 
 - La entidad raiz es el VEHICULO, no el contacto: vehiculos (patente, vin, modelo, km, cliente_id).
 - Tablas: vehiculos, clientes, ordenes (historial por vehiculo).

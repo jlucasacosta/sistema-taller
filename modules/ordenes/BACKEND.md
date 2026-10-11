@@ -1,5 +1,5 @@
 # Backend — Ordenes de trabajo (OT)
-> Asume BACKEND_RULES.md.
+> Guia paso a paso para conectar el backend: docs/IMPLEMENTAR.md.
 
 - Tablas: ordenes (vehiculo_id, estado, bahia, mecanico_id, labor_estimada, fired_at),
   bahias (numero, activa), estados_ot (catalogo).
