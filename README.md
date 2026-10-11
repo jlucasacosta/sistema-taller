@@ -18,12 +18,14 @@ Aprendé a crear tu Agencia de IA y conseguir tu primer cliente. Eso lo trabajam
 ---
 
 ## Qué incluye
-- Tablero: el **Estado de Bahías** con los autos sobre los elevadores y el cronómetro de mano de obra corriendo
-- Órdenes de trabajo (kanban por estado: en cola, diagnóstico, aprobación, reparación, espera de repuesto, control de calidad, entregado)
-- Inventario: kárdex de repuestos con punto de reorden y las piezas que bloquean una OT
+- Tablero: el **Estado de Bahías** con los autos sobre los elevadores, la mano de obra de cada uno contra lo estimado y cuatro contadores de la planta. Un clic en un auto abre la ficha de su orden
+- Órdenes de trabajo (kanban por estado: en cola, diagnóstico, aprobación, reparación, espera de repuesto, calidad, entregado). Cada orden abre su ficha con presupuesto, mano de obra y acciones de demostración
+- Inventario: kárdex de repuestos con punto de reorden y las piezas que bloquean una OT. Cada pieza abre su ficha
 - Mensajes: cada consulta atada a una patente y a una orden
-- Vehículos: ficha por patente con VIN, kilometraje e historial de trabajos
-- Configuración
+- Vehículos: lista por patente con filtro por estado; cada patente abre su ficha con VIN, kilometraje, orden en curso e historial de trabajos con montos
+- Configuración (incluye la leyenda de colores de estado)
+- Pantallas que cargan con `—` y bloques grises, y muestran un aviso con **Reintentar** si la carga falla
+- Sin animaciones decorativas: lo único que se mueve es lo que provocás vos (abrir una ficha, subir un auto, entregarlo)
 
 ## Requisitos (instalá esto primero)
 
@@ -66,7 +68,7 @@ Listo. Vas a ver el sistema funcionando.
 
 Todo el diseño (colores, tipografía, nombre de la marca) vive en un solo archivo: `shell/theme.ts`. Cambiás eso y muta el sistema entero.
 
-Probá algo concreto: en ese archivo, bajá `labor.excedido` de `1` a `0.7`. Toda la planta se pone en rojo antes, porque el Estado de Bahías lee sus umbrales de ahí. Ningún componente tiene un número ni un color escrito a mano.
+Probá algo concreto: en ese archivo, bajá `labor.excedido` de `1` a `0.7`. Más autos se marcan como excedidos antes, porque el Estado de Bahías lee sus umbrales de ahí. Ningún componente tiene un número ni un color escrito a mano.
 
 ## Cambiar los datos de ejemplo
 
@@ -88,7 +90,8 @@ Editá el JSON, guardá y mirá el cambio en el navegador. Los datos son **solo 
 app/            rutas (cada una muestra un módulo) y estilos globales
 modules/        un módulo por pantalla: index.tsx, api.ts, data.json y BACKEND.md
   ordenes/  inventario/  contactos/  conversaciones/  dashboard/  config/
-shell/          lo compartido: theme.ts (el diseño), nav.tsx, tablero-bahias.tsx, taller.ts
+shell/          lo compartido: theme.ts (el diseño), nav.tsx, tablero-bahias.tsx, taller.ts,
+                carga.tsx (estados de carga y error), ficha-lateral.tsx (el panel de detalle)
 docs/           IMPLEMENTAR.md: guía para conectar el backend real
 DISENO.md       la ficha de diseño de la marca
 .env.example    lista de variables de entorno (vacía, sin valores)

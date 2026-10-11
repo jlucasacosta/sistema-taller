@@ -12,7 +12,8 @@
       "bahia": 1,
       "laborHecha": 214,
       "laborEstimada": 240,
-      "diasEnTaller": 2
+      "diasEnTaller": 2,
+      "presupuesto": 486000
     },
     {
       "id": "OT-4823",
@@ -26,7 +27,8 @@
       "bahia": 2,
       "laborHecha": 96,
       "laborEstimada": 120,
-      "diasEnTaller": 1
+      "diasEnTaller": 1,
+      "presupuesto": 196400
     },
     {
       "id": "OT-4818",
@@ -38,9 +40,10 @@
       "trabajo": "Tren delantero + alineación",
       "estado": "espera repuesto",
       "bahia": 3,
-      "laborHecha": 340,
+      "laborHecha": 280,
       "laborEstimada": 300,
       "diasEnTaller": 6,
+      "presupuesto": 264500,
       "repuestoFaltante": "Rótula sup. der. (48068-0K040)"
     },
     {
@@ -53,9 +56,10 @@
       "trabajo": "Cambio de correa",
       "estado": "qc",
       "bahia": 4,
-      "laborHecha": 178,
-      "laborEstimada": 180,
-      "diasEnTaller": 1
+      "laborHecha": 88,
+      "laborEstimada": 90,
+      "diasEnTaller": 1,
+      "presupuesto": 92400
     },
     {
       "id": "OT-4815",
@@ -69,7 +73,8 @@
       "bahia": 5,
       "laborHecha": 502,
       "laborEstimada": 420,
-      "diasEnTaller": 8
+      "diasEnTaller": 8,
+      "presupuesto": 398400
     },
     {
       "id": "OT-4829",
@@ -83,7 +88,8 @@
       "bahia": 6,
       "laborHecha": 38,
       "laborEstimada": 60,
-      "diasEnTaller": 1
+      "diasEnTaller": 1,
+      "presupuesto": 34000
     },
     {
       "id": "OT-4830",
@@ -97,7 +103,8 @@
       "bahia": null,
       "laborHecha": 0,
       "laborEstimada": 90,
-      "diasEnTaller": 0
+      "diasEnTaller": 0,
+      "presupuesto": null
     },
     {
       "id": "OT-4831",
@@ -111,7 +118,8 @@
       "bahia": null,
       "laborHecha": 0,
       "laborEstimada": 150,
-      "diasEnTaller": 0
+      "diasEnTaller": 0,
+      "presupuesto": null
     },
     {
       "id": "OT-4832",
@@ -125,7 +133,8 @@
       "bahia": null,
       "laborHecha": 0,
       "laborEstimada": 110,
-      "diasEnTaller": 0
+      "diasEnTaller": 1,
+      "presupuesto": null
     },
     {
       "id": "OT-4827",
@@ -139,7 +148,8 @@
       "bahia": null,
       "laborHecha": 0,
       "laborEstimada": 130,
-      "diasEnTaller": 3
+      "diasEnTaller": 3,
+      "presupuesto": 138500
     },
     {
       "id": "OT-4824",
@@ -154,6 +164,7 @@
       "laborHecha": 145,
       "laborEstimada": 260,
       "diasEnTaller": 11,
+      "presupuesto": 568000,
       "repuestoFaltante": "Cremallera (6R1423055)"
     },
     {
@@ -168,7 +179,8 @@
       "bahia": null,
       "laborHecha": 25,
       "laborEstimada": 140,
-      "diasEnTaller": 4
+      "diasEnTaller": 4,
+      "presupuesto": 298800
     },
     {
       "id": "OT-4812",
@@ -182,7 +194,8 @@
       "bahia": null,
       "laborHecha": 388,
       "laborEstimada": 360,
-      "diasEnTaller": 9
+      "diasEnTaller": 9,
+      "presupuesto": 894000
     },
     {
       "id": "OT-4813",
@@ -196,7 +209,8 @@
       "bahia": null,
       "laborHecha": 118,
       "laborEstimada": 120,
-      "diasEnTaller": 2
+      "diasEnTaller": 2,
+      "presupuesto": 184900
     },
     {
       "id": "OT-4816",
@@ -210,7 +224,8 @@
       "bahia": null,
       "laborHecha": 232,
       "laborEstimada": 240,
-      "diasEnTaller": 3
+      "diasEnTaller": 3,
+      "presupuesto": 478500
     },
     {
       "id": "OT-4819",
@@ -224,7 +239,8 @@
       "bahia": null,
       "laborHecha": 268,
       "laborEstimada": 280,
-      "diasEnTaller": 4
+      "diasEnTaller": 4,
+      "presupuesto": 779600
     },
     {
       "id": "OT-4825",
@@ -238,7 +254,8 @@
       "bahia": null,
       "laborHecha": 52,
       "laborEstimada": 320,
-      "diasEnTaller": 1
+      "diasEnTaller": 1,
+      "presupuesto": 447500
     },
     {
       "id": "OT-4828",
@@ -253,6 +270,7 @@
       "laborHecha": 74,
       "laborEstimada": 160,
       "diasEnTaller": 5,
+      "presupuesto": 286500,
       "repuestoFaltante": "Radiador (5U0121253)"
     },
     {
@@ -267,7 +285,8 @@
       "bahia": null,
       "laborHecha": 0,
       "laborEstimada": 180,
-      "diasEnTaller": 0
+      "diasEnTaller": 0,
+      "presupuesto": null
     },
     {
       "id": "OT-4834",
@@ -281,7 +300,8 @@
       "bahia": null,
       "laborHecha": 0,
       "laborEstimada": 100,
-      "diasEnTaller": 0
+      "diasEnTaller": 0,
+      "presupuesto": null
     },
     {
       "id": "OT-4817",
@@ -295,7 +315,8 @@
       "bahia": null,
       "laborHecha": 296,
       "laborEstimada": 300,
-      "diasEnTaller": 3
+      "diasEnTaller": 3,
+      "presupuesto": 430500
     },
     {
       "id": "OT-4822",
@@ -309,7 +330,8 @@
       "bahia": null,
       "laborHecha": 0,
       "laborEstimada": 90,
-      "diasEnTaller": 2
+      "diasEnTaller": 2,
+      "presupuesto": 207600
     }
   ]
 }

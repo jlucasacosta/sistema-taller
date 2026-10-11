@@ -18,6 +18,7 @@ export type OT = {
   laborHecha: number // minutos
   laborEstimada: number // minutos
   diasEnTaller: number
+  presupuesto: number | null // pesos; null mientras no se diagnosticó (en cola). Entregada: total facturado
   repuestoFaltante?: string
 }
 

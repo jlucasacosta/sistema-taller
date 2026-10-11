@@ -84,7 +84,7 @@ El sistema tiene 6 módulos. Cada módulo con datos tiene un `api.ts` (hoy devue
 
 | Módulo (ruta) | Funciones de `api.ts` | Archivo de datos (clave) | Tablas sugeridas en la base |
 |---|---|---|---|
-| Tablero (`/dashboard`) | `getTiles()`, `getBullets()`, `getAvisos()` (más `getOrdenes()` y `cerrarOT()` del módulo de órdenes) | `modules/dashboard/data.json` (`tiles`, `bullets`, `avisos`) | `avisos`, `ajustes` y vistas calculadas `dashboard_resumen`, `dashboard_bullets` |
+| Tablero (`/dashboard`) | `getBullets()`, `getAvisos()` (más `getOrdenes()` y `cerrarOT()` del módulo de órdenes) | `modules/dashboard/data.json` (`bullets`, `avisos`) | `avisos`, `ajustes` y vistas calculadas `dashboard_resumen`, `dashboard_bullets` |
 | Órdenes (`/ordenes`) | `getOrdenes()`, `moverABahia(id, bahia)`, `cerrarOT(id)` | `modules/ordenes/data.json` (`ordenes`) | `ordenes`, `bahias`, `mecanicos`, `ordenes_repuestos` y vista `ordenes_detalle` |
 | Inventario (`/inventario`) | `getPiezas()` | `modules/inventario/data.json` (`piezas`) | `piezas`, `movimientos` y vista `piezas_estado` |
 | Mensajes (`/conversaciones`) | `getTickets()` | `modules/conversaciones/data.json` (`tickets`) | `conversaciones`, `mensajes` y vista `tickets` |
@@ -96,7 +96,9 @@ Cada módulo trae un `BACKEND.md` con las ideas de diseño del backend. Esta gu�
 Dos cosas del demo que conviene saber antes de empezar:
 
 - El **estado de bahías** (el componente estrella) sale de la lista de órdenes: una orden con `bahia` distinta de `null` está sobre un elevador; una en estado `en cola` espera. No hay una tabla "estado de bahías": se calcula.
-- Las cifras de los *tiles* y de los *bullets* del dashboard son texto fijo en el demo. Con datos reales salen de consultas sobre `ordenes` (más abajo).
+- Los cuatro contadores del Tablero (órdenes abiertas, esperando repuesto, excedidas, para entregar) **ya se calculan en la pantalla** a partir de `getOrdenes()`: no hay una función `getTiles()`. Los *bullets* de horas por mecánico son texto fijo en el demo; con datos reales salen de consultas sobre `ordenes` (más abajo).
+- Cada pantalla que carga datos usa el hook `useCarga` (`shell/carga.tsx`): mientras llegan muestra `—` y bloques grises, y si la función de `api.ts` lanza un error muestra «No pudimos cargar…» con un botón **Reintentar**. Por eso, con backend real, tus funciones tienen que **lanzar** el error (ver 3.6).
+- Vehículos, inventario y órdenes abren una **ficha lateral** (`shell/ficha-lateral.tsx`) con todos los datos de la fila y acciones de demostración que no guardan nada: son el punto de partida para conectar las escrituras reales.
 
 ---
 
@@ -115,11 +117,11 @@ Supabase te da una base Postgres, el inicio de sesión de usuarios y una API lis
 
 El diseño sale de los tipos reales de cada `api.ts` y de las claves reales de cada `data.json`:
 
-- `OT` (`ordenes`): `id` ("OT-4821"), `patente`, `vehiculo`, `km`, `cliente`, `mecanico`, `trabajo`, `estado`, `bahia`, `laborHecha`, `laborEstimada` (minutos), `diasEnTaller`, `repuestoFaltante?`.
+- `OT` (`ordenes`): `id` ("OT-4821"), `patente`, `vehiculo`, `km`, `cliente`, `mecanico`, `trabajo`, `estado`, `bahia`, `laborHecha`, `laborEstimada` (minutos), `diasEnTaller`, `presupuesto` (pesos; `null` mientras no se diagnosticó; en una orden entregada es el total facturado), `repuestoFaltante?`.
 - `Pieza` (`inventario`): `id`, `sku`, `descripcion`, `ubicacion`, `costo`, `stock`, `reorden`, `maximo`, `bloqueaOT?`.
 - `Vehiculo` (`contactos`): `id`, `patente`, `vehiculo`, `vin`, `km`, `cliente`, `telefono`, `email`, `proximoService`, `estado`, `historial: { fecha, ot, trabajo, costo }[]`.
 - `Ticket` (`conversaciones`): `id`, `patente`, `ot`, `cliente`, `asunto`, `ultimo`, `hora`, `sinLeer`, `tipo`.
-- Dashboard: `Tile` (`label`, `valor`, `tono`), `Bullet` (`label`, `real`, `objetivo`, `max`, `unidad`), `Aviso` (`texto`, `tiempo`, `tono`).
+- Dashboard: `Bullet` (`label`, `real`, `objetivo`, `max`, `unidad`), `Aviso` (`texto`, `tiempo`, `tono`).
 
 Reglas que se respetan en el SQL (son las del demo):
 
@@ -263,8 +265,7 @@ insert into public.ajustes (clave, valor) values
   ('labor_cerca', 0.85),                          -- = theme.labor.cerca
   ('labor_excedido', 1),                          -- = theme.labor.excedido
   ('objetivo_horas_facturables_semana', 36),
-  ('objetivo_ocupacion_bahias', 5),
-  ('objetivo_ots_cerradas_semana', 15);
+  ('objetivo_ots_entregadas_semana', 6);
 
 create table public.avisos (             -- feed de "Actividad reciente"
   id         uuid primary key default gen_random_uuid(),
@@ -310,6 +311,7 @@ select
   o.bahia,
   o.labor_hecha_min,
   o.labor_estimada_min,
+  o.costo_total                              as presupuesto,
   (coalesce(o.entregado_at, now())::date - o.ingreso_at::date) as dias_en_taller,
   (select p.descripcion || ' (' || p.sku || ')'
      from public.ordenes_repuestos r
@@ -353,13 +355,16 @@ from public.conversaciones c
 join public.vehiculos v  on v.id = c.vehiculo_id
 join public.clientes  cl on cl.id = v.cliente_id;
 
--- Tiles del Tablero (las definiciones son un ejemplo: ajustalas a tu taller)
+-- Contadores del Tablero. En el demo se calculan en la pantalla; con backend real podés
+-- dejarlos así (suman sobre getOrdenes) o traerlos de esta vista (las definiciones son un ejemplo).
 create view public.dashboard_resumen with (security_invoker = true) as
 select
-  (select count(*) from public.ordenes where estado not in ('aprobacion','entregado'))::int          as autos_en_planta,
   (select count(*) from public.ordenes where estado <> 'entregado')::int                              as ots_abiertas,
   (select count(*) from public.ordenes where estado = 'espera repuesto')::int                         as esperando_repuesto,
-  (select count(*) from public.ordenes where estado = 'entregado' and entregado_at::date = current_date)::int as entregas_hoy;
+  (select count(*) from public.ordenes
+    where estado <> 'entregado' and labor_hecha_min > 0
+      and labor_hecha_min >= labor_estimada_min * (select valor from public.ajustes where clave = 'labor_excedido'))::int as excedidas,
+  (select count(*) from public.ordenes where estado = 'qc')::int                                      as para_entregar;
 
 -- Bullets del Tablero: real vs objetivo
 create view public.dashboard_bullets with (security_invoker = true) as
@@ -375,16 +380,10 @@ left join public.ordenes o
 where m.activo
 group by m.id, m.nombre
 union all
-select 'ocupacion', 'Ocupación de bahías',
-       count(distinct bahia)::numeric,
-       (select valor from public.ajustes where clave = 'objetivo_ocupacion_bahias'),
-       6::numeric, 'bahías'
-from public.ordenes where bahia is not null
-union all
-select 'cerradas', 'OTs cerradas / semana',
+select 'entregadas', 'OTs entregadas / semana',
        count(*)::numeric,
-       (select valor from public.ajustes where clave = 'objetivo_ots_cerradas_semana'),
-       20::numeric, 'OT'
+       (select valor from public.ajustes where clave = 'objetivo_ots_entregadas_semana'),
+       10::numeric, 'OT'
 from public.ordenes where estado = 'entregado' and entregado_at >= date_trunc('week', now());
 ```
 
@@ -526,7 +525,7 @@ const vehs = ok(
 )
 const vehId = Object.fromEntries(vehs.map((v) => [v.patente, v.id]))
 
-// 4) órdenes: las 22 del tablero + las del historial que no están en el tablero
+// 4) órdenes: las 22 del tablero + las del historial que no están en el tablero (15 trabajos viejos)
 const historial = vehiculos.flatMap((v) => v.historial.map((h) => ({ ...h, patente: v.patente })))
 const hist = Object.fromEntries(historial.map((h) => [h.ot, h]))
 const filasOrdenes = ordenes.map((o) => ({
@@ -539,7 +538,7 @@ const filasOrdenes = ordenes.map((o) => ({
   km_ingreso: o.km,
   labor_hecha_min: o.laborHecha,
   labor_estimada_min: o.laborEstimada,
-  costo_total: hist[o.id] ? plata(hist[o.id].costo) : null,
+  costo_total: o.presupuesto, // el presupuesto de la orden (null si todavía está en cola)
   ingreso_at: hace(o.diasEnTaller * DIA),
   entregado_at: o.estado === "entregado" ? fechaHistorial(hist[o.id]?.fecha ?? "hoy") : null,
 }))
@@ -630,7 +629,7 @@ Notas para correrlo bien:
 
 **Alternativa por CSV (solo para tablas simples):** en **Table Editor** abrí la tabla y usá **Insert > Import data from CSV** (el nombre exacto del botón puede variar según la versión del panel). Sirve para `piezas` o `mecanicos`, pero exige que las columnas del CSV se llamen igual que las de la tabla, que `costo` vaya sin `$` ni puntos y que los vínculos (uuid) estén resueltos: por eso para las tablas relacionadas el script es mucho más cómodo.
 
-**Cómo comprobar:** en el editor SQL, `select count(*) from public.ordenes;` debería dar 33 (las 22 del tablero + 11 trabajos viejos que solo aparecían en el historial de los vehículos), y `select * from public.piezas_estado where bloquea_ot is not null;` debería devolver 3 piezas.
+**Cómo comprobar:** en el editor SQL, `select count(*) from public.ordenes;` debería dar 37 (las 22 del tablero + 15 trabajos viejos que solo aparecían en el historial de los vehículos), y `select * from public.piezas_estado where bloquea_ot is not null;` debería devolver 3 piezas.
 
 ### 3.4 Variables de entorno
 
@@ -748,6 +747,7 @@ export async function getOrdenes(): Promise<OT[]> {
     laborHecha: Number(r.labor_hecha_min),
     laborEstimada: r.labor_estimada_min,
     diasEnTaller: r.dias_en_taller,
+    presupuesto: r.presupuesto === null ? null : Number(r.presupuesto),
     ...(r.repuesto_faltante ? { repuestoFaltante: r.repuesto_faltante } : {}),
   }))
 }
@@ -757,7 +757,7 @@ Qué hay que notar:
 
 - Supabase siempre devuelve `{ data, error }` y **no lanza excepciones por sí solo**: revisá `error` y lanzalo vos.
 - Las columnas de la base son `snake_case` y los tipos de la app son `camelCase`: el `map` traduce. Ese `map` es lo único que cambia entre la base y las pantallas.
-- Las pantallas hacen `getOrdenes().then(setRows)` sin manejo de errores (en el demo no fallaba nunca). Con backend real agregá un `.catch` que muestre un aviso; si no, ante un error la pantalla queda vacía sin explicación.
+- Las pantallas cargan con `useCarga(getOrdenes)`, que **captura el rechazo** de la promesa y muestra «No pudimos cargar…» con un botón **Reintentar**. Por eso es importante que la función lance el error (`throw new Error(...)`) en vez de devolver una lista vacía: así el usuario ve que algo falló y no confunde un fallo con «no hay órdenes».
 
 Una función de escritura, `moverABahia`, queda así (la restricción única de la bahía hace de red de seguridad si dos personas suben un auto al mismo elevador):
 
@@ -776,7 +776,7 @@ export async function moverABahia(id: string, bahia: number): Promise<void> {
 }
 ```
 
-Hacé lo mismo, una función por vez, con el resto: `getPiezas` (vista `piezas_estado`), `getVehiculos` (vista `vehiculos_estado` + historial desde `ordenes`), `getTickets` (vista `tickets`), `getTiles` / `getBullets` (vistas `dashboard_resumen` / `dashboard_bullets`), `getAvisos` (tabla `avisos`), `cerrarOT` (update de `estado = 'entregado'`, `entregado_at = now()` y `bahia = null`).
+Hacé lo mismo, una función por vez, con el resto: `getPiezas` (vista `piezas_estado`), `getVehiculos` (vista `vehiculos_estado` + historial desde `ordenes`), `getTickets` (vista `tickets`), `getBullets` (vista `dashboard_bullets`), `getAvisos` (tabla `avisos`), `cerrarOT` (update de `estado = 'entregado'`, `entregado_at = now()` y `bahia = null`).
 
 Diferencias de forma que tenés que resolver en esos `map` (el demo guarda texto ya formateado):
 
@@ -787,9 +787,9 @@ Diferencias de forma que tenés que resolver en esos `map` (el demo guarda texto
 | `hora: "16:40"` / `"Ayer"` | `ultimo_mensaje_at` (fecha) | Formatear según sea hoy o ayer |
 | `tiempo: "hace 12 min"` | `created_at` (fecha) | Calcular el "hace" con `Intl.RelativeTimeFormat` o a mano |
 | `fecha: "mar 2026"` (historial) | `entregado_at` | Formatear mes y año |
-| `valor: "14"` (tile) | número | Pasarlo a texto con `String(n)` |
+| `presupuesto: 486000` (orden) | `costo_total` (`numeric`) | Pasarlo a número con `Number(n)`; `null` si todavía no hay presupuesto |
 
-Los números del demo son inventados y no coinciden entre sí al 100% (por ejemplo, la cantidad de vehículos "en taller" no iguala a las órdenes abiertas). Con datos reales las cifras salen de las reglas del SQL.
+Los datos del demo son inventados, pero cierran entre pantallas: los vehículos «en taller» son los que tienen una orden abierta, el presupuesto de cada orden coincide con su monto en el historial del vehículo y las piezas que «bloquean» una orden tienen stock en cero. Con datos reales esas cifras salen de las reglas del SQL.
 
 Opcional: para que TypeScript conozca tus tablas, generá los tipos con la CLI de Supabase (`npx supabase gen types typescript --project-id tu-proyecto --schema public > lib/supabase/types.ts`) y pasalos a `createClient<Database>()`.
 
@@ -1189,7 +1189,7 @@ Marcá cada punto. Si uno no está, no cargues clientes reales.
 | Error | Causa probable | Solución |
 |---|---|---|
 | `permission denied for table ordenes` | Faltan los `grant` o la sesión no es de un usuario autenticado | Corré las 3 líneas `grant` del bloque C y verificá que iniciaste sesión |
-| La pantalla carga pero no muestra datos y no hay error visible | RLS activado sin política que permita leer, o el `.then` no tiene `.catch` | Revisá las políticas (`autenticados leen`) y agregá `.catch` para mostrar el error |
+| La pantalla carga pero no muestra datos y no hay error visible | RLS activado sin política que permita leer, o la función de `api.ts` devuelve una lista vacía en vez de lanzar el error | Revisá las políticas (`autenticados leen`) y verificá que la función hace `throw` si `error` viene lleno: así la pantalla muestra «No pudimos cargar…» |
 | `new row violates row-level security policy` | Falta la política de escritura (`with check`) | Verificá que existe `autenticados escriben` en esa tabla |
 | `duplicate key value violates unique constraint "ordenes_una_ot_por_bahia"` | Dos órdenes quieren la misma bahía | Es la regla funcionando: mostrá "Esa bahía ya está ocupada" (código `23505`) |
 | `violates check constraint "ordenes_entregado_coherente"` | Pusiste `estado = 'entregado'` sin `entregado_at` (o al revés) | Al cerrar una orden actualizá `estado`, `entregado_at` y `bahia = null` juntos |

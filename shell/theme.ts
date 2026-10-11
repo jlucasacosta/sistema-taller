@@ -54,7 +54,7 @@ export const bulon: Theme = {
     border: "#d6dbd8",
     subtle: "#e8ebe8",
     success: "#0e6d65", // teal: repuesto llego / entregado. Ajustado desde #0f766e para llegar a 4.5:1 en chips sobre bg
-    warning: "#ab390b", // naranja oscuro: legible como TEXTO (el accent no llega a 4.5:1). Ajustado desde #c2410c para 4.5:1 en chips
+    warning: "#7a4f00", // ámbar oscuro: espera de un tercero (cliente o proveedor). Legible como TEXTO (5.2:1 en chips) y lejos del rojo: desde 2026-10-11 ya no es terracota
     danger: "#b00020", // rojo frio y oscuro: separado del naranja para no confundirlos de lejos
     info: "#475569", // acero: en cola / idle
   },

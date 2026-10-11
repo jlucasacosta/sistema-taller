@@ -13,7 +13,7 @@
   --border: 214 219 216;
   --subtle: 232 235 232;
   --success: 14 109 101;
-  --warning: 171 57 11;
+  --warning: 122 79 0;
   --danger: 176 0 32;
   --info: 71 85 105;
   --radius: 4px;
@@ -69,23 +69,40 @@
     gap: 0.25rem;
     border-radius: var(--badge-radius);
     padding: 0.125rem 0.5rem;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     line-height: 1.1rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
     white-space: nowrap;
     font-family: var(--font-body);
   }
-  /* Chip que es un BOTON (filtros, toggles): 24px de alto en mouse, 44px en pantalla tactil. */
+  /* Chip que es un BOTON (filtros, toggles): 28px de alto en mouse, 44px en pantalla tactil. */
   .chip-btn {
-    min-height: 1.5rem;
+    min-height: 1.75rem;
     cursor: pointer;
   }
-  @media (pointer: coarse) {
+  /* Area de toque de 44px para botones y links que no son chips (clase flex/inline-flex).
+     En escritorio con mouse se conserva la densidad del sistema. */
+  .tap {
+    min-height: 1.75rem;
+  }
+  @media (pointer: coarse), (max-width: 767px) {
+    .tap,
     .chip-btn {
       min-height: 2.75rem;
-      padding-inline: 0.75rem;
+      min-width: 2.75rem;
+      justify-content: center;
     }
+  }
+  /* Agranda el area de toque a ~44px SIN cambiar el tamano visible (links o iconos chicos
+     dentro de una fila). El elemento tiene que estar posicionado: .hit ya lo hace relative. */
+  .hit {
+    position: relative;
+  }
+  .hit::after {
+    content: "";
+    position: absolute;
+    inset: -0.75rem -0.25rem;
   }
   /* Todo lo que es DATO va en mono tabular: patente, VIN, SKU, horas, torques. */
   .dato {
@@ -106,49 +123,11 @@
   }
 }
 
-/* El auto SUBE al elevador: el movimiento del taller es vertical, no horizontal. */
-@keyframes subir {
-  from { transform: translateY(28px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-.subiendo { animation: subir 480ms cubic-bezier(0.16, 1, 0.3, 1); }
-
-/* Y baja para salir de la bahia cuando se cierra QC. */
-@keyframes bajar {
-  to { transform: translateY(36px); opacity: 0; }
-}
-.bajando { animation: bajar 420ms ease-in forwards; }
-
-/* La OT excedida late. Es el frame que se graba. El pulso vive en un pseudo-elemento
-   animado con transform (compositor), asi no pisa el shorthand animation de .subiendo / .bajando. */
-.excedida { position: relative; }
-.excedida::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  width: 6px;
-  background: rgb(var(--danger));
-  transform-origin: left center;
-  pointer-events: none;
-  animation: latir-ot 1.3s ease-in-out infinite;
-}
-@keyframes latir-ot {
-  0%, 100% { transform: scaleX(0.5); }
-  50% { transform: scaleX(1); }
-}
-
-/* Movimiento reducido: NO se apaga el cambio de estado, se cambia el recurso.
-   Entrar y salir pasan a un fundido corto sin desplazamiento, y la OT excedida
-   conserva su marca (franja fija) en lugar del pulso. */
-@keyframes aparecer { from { opacity: 0; } to { opacity: 1; } }
-@keyframes desvanecer { to { opacity: 0; } }
-@media (prefers-reduced-motion: reduce) {
-  .subiendo { animation: aparecer 200ms ease-out; }
-  .bajando { animation: desvanecer 200ms ease-in forwards; }
-  .excedida::before { animation: none; transform: scaleX(0.75); }
-}
+/* MOVIMIENTO: serio, sin decoración. Este archivo no define animaciones ni keyframes: ni conteos,
+   ni pulsos, ni entradas con desplazamiento, ni relojes que corren solos. Lo único que se mueve es
+   feedback funcional: color en hover y foco, y los cambios de estado que el usuario provoca.
+   Una OT excedida se marca con borde rojo fijo y el rótulo "excedido", no con un pulso.
+   Ver DISENO.md, nota del 2026-10-11. */
 
 html {
   -webkit-font-smoothing: antialiased;

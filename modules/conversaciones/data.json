@@ -28,9 +28,9 @@
       "ot": "OT-4820",
       "cliente": "Vanina Recalde",
       "asunto": "Aprobación amortiguadores",
-      "ultimo": "Dale, arranquen nomás",
+      "ultimo": "Mandame el detalle por mail y lo apruebo",
       "hora": "15:12",
-      "sinLeer": 0,
+      "sinLeer": 1,
       "tipo": "aprobacion"
     },
     {
@@ -49,7 +49,7 @@
       "patente": "AA 231 LP",
       "ot": "OT-4818",
       "cliente": "Estanislao Vergara",
-      "asunto": "Llegó la rótula",
+      "asunto": "Rótula en camino",
       "ultimo": "Perfecto, avísenme cuando esté",
       "hora": "13:20",
       "sinLeer": 1,
@@ -115,11 +115,11 @@
       "patente": "AF 412 KM",
       "ot": "OT-4821",
       "cliente": "Transporte Aldabe",
-      "asunto": "Embrague Amarok",
+      "asunto": "Embrague aprobado",
       "ultimo": "Confirmado, procedan",
       "hora": "09:05",
       "sinLeer": 0,
-      "tipo": "aprobacion"
+      "tipo": "aviso"
     },
     {
       "id": "12",

@@ -22,7 +22,7 @@
           "fecha": "mar 2026",
           "ot": "OT-4610",
           "trabajo": "Service 140.000 km",
-          "costo": "$ 96.400"
+          "costo": "$ 168.400"
         },
         {
           "fecha": "oct 2025",
@@ -48,7 +48,7 @@
           "fecha": "hoy",
           "ot": "OT-4823",
           "trabajo": "Service 60.000 km",
-          "costo": "$ 118.200"
+          "costo": "$ 196.400"
         },
         {
           "fecha": "ene 2026",
@@ -80,13 +80,13 @@
           "fecha": "nov 2025",
           "ot": "OT-4438",
           "trabajo": "Kit de distribución",
-          "costo": "$ 289.000"
+          "costo": "$ 372.400"
         },
         {
           "fecha": "abr 2025",
           "ot": "OT-4187",
           "trabajo": "Service 190.000 km",
-          "costo": "$ 104.700"
+          "costo": "$ 148.500"
         }
       ]
     },
@@ -106,7 +106,7 @@
           "fecha": "hoy",
           "ot": "OT-4826",
           "trabajo": "Cambio de correa",
-          "costo": "$ 78.900"
+          "costo": "$ 92.400"
         }
       ]
     },
@@ -166,13 +166,13 @@
       "telefono": "+54 9 11 2957-6431",
       "email": "rosariobianchi@outlook.com",
       "proximoService": "80.000 km",
-      "estado": "al dia",
+      "estado": "en taller",
       "historial": [
         {
           "fecha": "sep 2025",
           "ot": "OT-4371",
           "trabajo": "Service 60.000 km",
-          "costo": "$ 92.300"
+          "costo": "$ 138.900"
         }
       ]
     },
@@ -186,19 +186,19 @@
       "telefono": "+54 9 261 801-7352",
       "email": "compras@ferreteriamachuca.com",
       "proximoService": "160.000 km",
-      "estado": "al dia",
+      "estado": "en taller",
       "historial": [
         {
           "fecha": "feb 2026",
           "ot": "OT-4588",
           "trabajo": "Embrague",
-          "costo": "$ 412.000"
+          "costo": "$ 459.800"
         },
         {
           "fecha": "may 2025",
           "ot": "OT-4231",
           "trabajo": "Service 140.000 km",
-          "costo": "$ 88.600"
+          "costo": "$ 129.700"
         }
       ]
     },
@@ -212,7 +212,7 @@
       "telefono": "+54 9 11 7013-5528",
       "email": "administracion@agropuelches.com",
       "proximoService": "50.000 km",
-      "estado": "al dia",
+      "estado": "en taller",
       "historial": []
     },
     {
@@ -225,13 +225,19 @@
       "telefono": "+54 9 11 4406-9173",
       "email": "cami.ferrero@hotmail.com",
       "proximoService": "vencido",
-      "estado": "service vencido",
+      "estado": "en taller",
       "historial": [
+        {
+          "fecha": "hoy",
+          "ot": "OT-4827",
+          "trabajo": "Bomba de agua",
+          "costo": "$ 138.500"
+        },
         {
           "fecha": "ago 2025",
           "ot": "OT-4318",
           "trabajo": "Frenos completos",
-          "costo": "$ 148.900"
+          "costo": "$ 238.600"
         }
       ]
     },
@@ -245,19 +251,19 @@
       "telefono": "+54 9 11 6672-2049",
       "email": "hquintana@yahoo.com",
       "proximoService": "vencido",
-      "estado": "service vencido",
+      "estado": "en taller",
       "historial": [
         {
           "fecha": "hoy",
           "ot": "OT-4824",
           "trabajo": "Caja de dirección",
-          "costo": "$ 512.000"
+          "costo": "$ 568.000"
         },
         {
           "fecha": "dic 2024",
           "ot": "OT-3980",
           "trabajo": "Service 200.000 km",
-          "costo": "$ 76.200"
+          "costo": "$ 104.600"
         }
       ]
     },
@@ -271,13 +277,13 @@
       "telefono": "+54 9 11 5217-4486",
       "email": "vaninarecalde@outlook.com",
       "proximoService": "100.000 km",
-      "estado": "al dia",
+      "estado": "en taller",
       "historial": [
         {
           "fecha": "hoy",
           "ot": "OT-4820",
           "trabajo": "Amortiguadores traseros",
-          "costo": "$ 218.400"
+          "costo": "$ 298.800"
         }
       ]
     },
@@ -317,7 +323,7 @@
           "fecha": "esta semana",
           "ot": "OT-4813",
           "trabajo": "Service 120.000 km",
-          "costo": "$ 98.100"
+          "costo": "$ 184.900"
         }
       ]
     },
@@ -337,7 +343,7 @@
           "fecha": "esta semana",
           "ot": "OT-4816",
           "trabajo": "Embrague",
-          "costo": "$ 376.500"
+          "costo": "$ 478.500"
         }
       ]
     },
@@ -357,7 +363,7 @@
           "fecha": "hoy",
           "ot": "OT-4819",
           "trabajo": "Inyectores",
-          "costo": "$ 604.000"
+          "costo": "$ 779.600"
         }
       ]
     },
@@ -377,7 +383,7 @@
           "fecha": "hoy",
           "ot": "OT-4825",
           "trabajo": "Distribución",
-          "costo": "$ 331.200"
+          "costo": "$ 447.500"
         }
       ]
     },
@@ -397,7 +403,7 @@
           "fecha": "hoy",
           "ot": "OT-4828",
           "trabajo": "Radiador",
-          "costo": "$ 214.700"
+          "costo": "$ 286.500"
         }
       ]
     },
@@ -411,7 +417,7 @@
       "telefono": "+54 9 11 5739-1264",
       "email": "lucila.aguirre@gmail.com",
       "proximoService": "vencido",
-      "estado": "service vencido",
+      "estado": "en taller",
       "historial": []
     },
     {
@@ -424,7 +430,7 @@
       "telefono": "+54 9 11 2965-8317",
       "email": "bruno_etchegaray@outlook.com",
       "proximoService": "60.000 km",
-      "estado": "al dia",
+      "estado": "en taller",
       "historial": []
     },
     {
@@ -443,7 +449,7 @@
           "fecha": "esta semana",
           "ot": "OT-4817",
           "trabajo": "Kit de distribución",
-          "costo": "$ 344.000"
+          "costo": "$ 430.500"
         }
       ]
     },
@@ -457,8 +463,95 @@
       "telefono": "+54 9 11 5240-9976",
       "email": "fbunge@yahoo.com",
       "proximoService": "80.000 km",
+      "estado": "en taller",
+      "historial": [
+        {
+          "fecha": "hoy",
+          "ot": "OT-4822",
+          "trabajo": "Pastillas + discos",
+          "costo": "$ 207.600"
+        }
+      ]
+    },
+    {
+      "id": "23",
+      "patente": "AB 513 JN",
+      "vehiculo": "Renault Logan 2017",
+      "vin": "93YLSR3NHHJ604417",
+      "km": 167200,
+      "cliente": "Osvaldo Treviño",
+      "telefono": "+54 9 261 744-3085",
+      "email": "osvaldotrevino62@hotmail.com",
+      "proximoService": "vencido",
+      "estado": "service vencido",
+      "historial": [
+        {
+          "fecha": "mar 2025",
+          "ot": "OT-4102",
+          "trabajo": "Service 150.000 km",
+          "costo": "$ 161.800"
+        }
+      ]
+    },
+    {
+      "id": "24",
+      "patente": "AE 340 PM",
+      "vehiculo": "Fiat Palio 2013",
+      "vin": "9BD17108GD5336051",
+      "km": 243900,
+      "cliente": "Rubén Paz",
+      "telefono": "+54 9 11 6021-7794",
+      "email": "paz.ruben@hotmail.com",
+      "proximoService": "vencido",
+      "estado": "service vencido",
+      "historial": [
+        {
+          "fecha": "jul 2025",
+          "ot": "OT-4264",
+          "trabajo": "Service 230.000 km",
+          "costo": "$ 142.400"
+        }
+      ]
+    },
+    {
+      "id": "25",
+      "patente": "AG 071 LC",
+      "vehiculo": "Volkswagen Polo 2022",
+      "vin": "9BWAH5BZ6NP021498",
+      "km": 52480,
+      "cliente": "Julieta Cabrera",
+      "telefono": "+54 9 351 755-2290",
+      "email": "juli_cabrera@outlook.com",
+      "proximoService": "60.000 km",
       "estado": "al dia",
-      "historial": []
+      "historial": [
+        {
+          "fecha": "jun 2026",
+          "ot": "OT-4731",
+          "trabajo": "Service 50.000 km",
+          "costo": "$ 214.900"
+        }
+      ]
+    },
+    {
+      "id": "26",
+      "patente": "AC 662 NT",
+      "vehiculo": "Toyota SW4 2018",
+      "vin": "8AJYA3FS7J0304772",
+      "km": 134300,
+      "cliente": "Gustavo Arrieta",
+      "telefono": "+54 9 341 588-4107",
+      "email": "arrieta.gus@yahoo.com",
+      "proximoService": "vencido",
+      "estado": "service vencido",
+      "historial": [
+        {
+          "fecha": "ene 2025",
+          "ot": "OT-3998",
+          "trabajo": "Service 120.000 km",
+          "costo": "$ 187.300"
+        }
+      ]
     }
   ]
 }

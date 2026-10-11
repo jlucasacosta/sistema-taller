@@ -2,8 +2,12 @@
 import { useId, useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { theme } from "@/shell/theme"
+import { chipEstado, etiquetaEstado, leyendaEstados, type EstadoOT } from "@/shell/taller"
 
 // ACORDEON: secciones colapsables, plomeria del sistema. Todo sale de shell/theme.ts.
+// El chevron gira al abrir: es un cambio de estado que provoca el usuario, no una animacion decorativa.
+
+const ESTADOS: EstadoOT[] = ["en cola", "diagnostico", "aprobacion", "reparacion", "espera repuesto", "qc", "entregado"]
 
 function Fila({ label, value, swatch }: { label: string; value: string; swatch?: boolean }) {
   return (
@@ -62,8 +66,8 @@ export function ConfigPage() {
         <Seccion titulo="Mano de obra (dominio)">
           <Fila label="Umbral 'cerca del estimado'" value={`${Math.round(theme.labor.cerca * 100)}%`} />
           <Fila label="Umbral 'excedido'" value={`${Math.round(theme.labor.excedido * 100)}%`} />
-          <p className="pt-2 text-[11px] leading-snug text-muted">
-            El Estado de bahías envejece con estos dos numeros. Bajá el umbral de excedido y toda la planta se pone en rojo antes.
+          <p className="pt-2 text-xs leading-snug text-muted">
+            El Estado de bahías marca cada auto según estos dos umbrales. Bajá el de excedido y más autos se marcan en rojo antes.
           </p>
         </Seccion>
 
@@ -80,29 +84,38 @@ export function ConfigPage() {
 
         <Seccion titulo="Paleta">
           <Fila label="Petróleo (primario)" value={c.primary} swatch />
-          <Fila label="Naranja señal (acento, solo fill)" value={c.accent} swatch />
+          <Fila label="Naranja señal (acento, solo relleno)" value={c.accent} swatch />
           <Fila label="Acero (en cola)" value={c.info} swatch />
           <Fila label="Teal (entregado)" value={c.success} swatch />
-          <Fila label="Espera repuesto" value={c.warning} swatch />
-          <Fila label="Excedido" value={c.danger} swatch />
+          <Fila label="Ámbar (espera de un tercero)" value={c.warning} swatch />
+          <Fila label="Rojo (excedido, quebrado, reclamo)" value={c.danger} swatch />
         </Seccion>
 
         <Seccion titulo="Estados de la OT">
           <div className="flex flex-wrap gap-2 pt-1">
-            <span className="chip bg-info/15 text-info">en cola</span>
-            <span className="chip bg-warning/15 text-warning">aprobación</span>
-            <span className="chip bg-primary/15 text-primary">reparación</span>
-            <span className="chip bg-accent/20 text-warning">espera repuesto</span>
-            <span className="chip bg-success/15 text-success">entregado</span>
+            {ESTADOS.map((e) => (
+              <span key={e} className={"chip " + chipEstado[e]}>
+                {etiquetaEstado[e]}
+              </span>
+            ))}
             <span className="chip bg-danger/15 text-danger">excedida</span>
           </div>
+          <ul className="mt-3 space-y-1.5">
+            {leyendaEstados.map((l) => (
+              <li key={l.titulo} className="flex items-baseline gap-2 text-xs">
+                <span className={"chip shrink-0 " + l.clase}>{l.titulo}</span>
+                <span className="text-muted">{l.detalle}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="pt-2 text-xs text-muted">«Calidad» es el control de calidad antes de entregar el auto.</p>
         </Seccion>
 
         <Seccion titulo="Integraciones">
           <Fila label="Facturación" value="mock (sin backend)" />
           <Fila label="WhatsApp" value="mock (sin backend)" />
           <Fila label="Catálogo de repuestos" value="mock (sin backend)" />
-          <p className="pt-2 text-[11px] text-muted">
+          <p className="pt-2 text-xs text-muted">
             Demo frontend con datos de ejemplo. Todo el diseño sale de shell/theme.ts.
           </p>
         </Seccion>

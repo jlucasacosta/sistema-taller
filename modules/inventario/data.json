@@ -16,7 +16,7 @@
       "descripcion": "Rótula suspensión sup. der.",
       "ubicacion": "C-04-1",
       "costo": "$ 41.200",
-      "stock": 2,
+      "stock": 0,
       "reorden": 2,
       "maximo": 10,
       "bloqueaOT": "OT-4818"
@@ -38,7 +38,7 @@
       "descripcion": "Radiador",
       "ubicacion": "D-05-1",
       "costo": "$ 174.500",
-      "stock": 1,
+      "stock": 0,
       "reorden": 2,
       "maximo": 6,
       "bloqueaOT": "OT-4828"

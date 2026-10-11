@@ -1,30 +1,4 @@
 {
-  "tiles": [
-    {
-      "id": "1",
-      "label": "Autos en planta",
-      "valor": "14",
-      "tono": "primary"
-    },
-    {
-      "id": "2",
-      "label": "OTs abiertas",
-      "valor": "18",
-      "tono": "info"
-    },
-    {
-      "id": "3",
-      "label": "Esperando repuesto",
-      "valor": "3",
-      "tono": "warning"
-    },
-    {
-      "id": "4",
-      "label": "Entregas hoy",
-      "valor": "4",
-      "tono": "success"
-    }
-  ],
   "bullets": [
     {
       "id": "1",
@@ -52,18 +26,10 @@
     },
     {
       "id": "4",
-      "label": "Ocupación de bahías",
-      "real": 6,
-      "objetivo": 5,
-      "max": 6,
-      "unidad": "bahías"
-    },
-    {
-      "id": "5",
-      "label": "OTs cerradas / semana",
-      "real": 11,
-      "objetivo": 15,
-      "max": 20,
+      "label": "OTs entregadas / semana",
+      "real": 4,
+      "objetivo": 6,
+      "max": 10,
       "unidad": "OT"
     }
   ],
@@ -76,9 +42,9 @@
     },
     {
       "id": "2",
-      "texto": "Llegó la rótula 48068-0K040: OT-4818 puede volver a reparación",
+      "texto": "Rótula 48068-0K040 pedida al proveedor: OT-4818 sigue esperando",
       "tiempo": "hace 40 min",
-      "tono": "success"
+      "tono": "warning"
     },
     {
       "id": "3",
@@ -106,7 +72,7 @@
     },
     {
       "id": "7",
-      "texto": "Bahía 03 bloqueada hace 6 días por espera de repuesto",
+      "texto": "OT-4828 espera el radiador desde hace 5 días",
       "tiempo": "hace 5 h",
       "tono": "warning"
     },
@@ -132,7 +98,7 @@
       "id": "11",
       "texto": "OT-4824 lleva 11 días esperando cremallera",
       "tiempo": "hace 2 días",
-      "tono": "danger"
+      "tono": "warning"
     },
     {
       "id": "12",
