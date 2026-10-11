@@ -366,7 +366,8 @@ select
       and labor_hecha_min >= labor_estimada_min * (select valor from public.ajustes where clave = 'labor_excedido'))::int as excedidas,
   (select count(*) from public.ordenes where estado = 'qc')::int                                      as para_entregar;
 
--- Bullets del Tablero: real vs objetivo
+-- Bullets del Tablero: real vs objetivo. Ejemplo: suma las horas de las órdenes entregadas esta
+-- semana; el demo trae cifras fijas en dashboard/data.json, por eso los números no coinciden.
 create view public.dashboard_bullets with (security_invoker = true) as
 select m.id::text as id,
        m.nombre || ' · horas facturables' as label,
@@ -528,20 +529,24 @@ const vehId = Object.fromEntries(vehs.map((v) => [v.patente, v.id]))
 // 4) órdenes: las 22 del tablero + las del historial que no están en el tablero (15 trabajos viejos)
 const historial = vehiculos.flatMap((v) => v.historial.map((h) => ({ ...h, patente: v.patente })))
 const hist = Object.fromEntries(historial.map((h) => [h.ot, h]))
-const filasOrdenes = ordenes.map((o) => ({
-  id: o.id,
-  vehiculo_id: vehId[o.patente],
-  mecanico_id: mecId[o.mecanico] ?? null,
-  trabajo: o.trabajo,
-  estado: o.estado,
-  bahia: o.bahia,
-  km_ingreso: o.km,
-  labor_hecha_min: o.laborHecha,
-  labor_estimada_min: o.laborEstimada,
-  costo_total: o.presupuesto, // el presupuesto de la orden (null si todavía está en cola)
-  ingreso_at: hace(o.diasEnTaller * DIA),
-  entregado_at: o.estado === "entregado" ? fechaHistorial(hist[o.id]?.fecha ?? "hoy") : null,
-}))
+const filasOrdenes = ordenes.map((o) => {
+  const entregado = o.estado === "entregado" ? fechaHistorial(hist[o.id]?.fecha ?? "hoy") : null
+  return {
+    id: o.id,
+    vehiculo_id: vehId[o.patente],
+    mecanico_id: mecId[o.mecanico] ?? null,
+    trabajo: o.trabajo,
+    estado: o.estado,
+    bahia: o.bahia,
+    km_ingreso: o.km,
+    labor_hecha_min: o.laborHecha,
+    labor_estimada_min: o.laborEstimada,
+    costo_total: o.presupuesto, // el presupuesto de la orden (null si todavía está en cola)
+    // las abiertas cuentan los días hasta hoy; las entregadas, hasta el día de entrega
+    ingreso_at: entregado ? new Date(Date.parse(entregado) - o.diasEnTaller * DIA).toISOString() : hace(o.diasEnTaller * DIA),
+    entregado_at: entregado,
+  }
+})
 const filasPasadas = historial
   .filter((h) => !ordenes.some((o) => o.id === h.ot))
   .map((h) => ({
@@ -549,6 +554,7 @@ const filasPasadas = historial
     vehiculo_id: vehId[h.patente],
     trabajo: h.trabajo,
     estado: "entregado",
+    labor_hecha_min: 0, // al insertar filas con columnas distintas en un mismo lote, las que faltan van como null: hay que pasarla
     labor_estimada_min: 60, // el demo no guarda la estimación de trabajos viejos: valor de relleno
     costo_total: plata(h.costo),
     ingreso_at: fechaHistorial(h.fecha),
